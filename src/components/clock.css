@@ -1,0 +1,115 @@
+@font-face {
+  font-family: "digi";
+  src: url("../digi.ttf") format("truetype");
+}
+.number-background {
+  left: 3.3vmin;
+  position: absolute;
+  z-index: 0;
+  color: rgba(12, 238, 208, 0.3);
+  user-select: none;
+}
+.number {
+  left: 3.3vmin;
+  position: absolute;
+  z-index: 1;
+  color: rgb(60, 158, 60);
+  user-select: none;
+}
+.number-one {
+  left: 6.3vmin;
+}
+.clock {
+  background-color: rgb(47, 46, 46);
+  width: 54.5vmin;
+  height: 20vmin;
+  border-radius: 3vmin;
+  border: 0.3vmin solid rgb(158, 151, 151);
+  display: flex;
+}
+.clock-time {
+  font-family: digi;
+  text-align: center;
+  font-size: 11vmin;
+}
+.clock-hours-left {
+  position: absolute;
+  display: inline-block;
+  margin-top: 2.5vmin;
+  margin-left: 1.5vmin;
+  height: 15vmin;
+  width: 12vmin;
+  border-radius: 1.5vmin;
+  background-color: rgb(166, 170, 173);
+  border-left: 0.3vmin solid white;
+}
+.clock-hours-right {
+  position: absolute;
+  display: inline-block;
+  margin-top: 2.5vmin;
+  height: 15vmin;
+  width: 12vmin;
+  border-radius: 1.5vmin;
+  border-left: 0.1vmin solid black;
+  background-color: rgb(166, 170, 173);
+  margin-left: 13.5vmin;
+}
+.clock-separator {
+  position: absolute;
+  border-left: 0.1vmin solid black;
+  border-right: 0.1vmin solid black;
+  line-height: 11.5vmin;
+  font-size: 12vmin;
+  text-align: center;
+  display: inline-block;
+  margin-top: 2.5vmin;
+  height: 15vmin;
+  width: 3vmin;
+  border-radius: 1.5vmin;
+  background-color: rgb(185, 189, 192);
+  margin-left: 25.5vmin;
+  user-select: none;
+}
+.clock-minutes-left {
+  position: absolute;
+  display: inline-block;
+  margin-top: 2.5vmin;
+  height: 15vmin;
+  width: 12vmin;
+  border-radius: 1.5vmin;
+  background-color: rgb(166, 170, 173);
+  margin-left: 28.7vmin;
+}
+.clock-minutes-right {
+  position: absolute;
+  display: inline-block;
+  margin-top: 2.5vmin;
+  height: 15vmin;
+  width: 12vmin;
+  border-radius: 1.5vmin;
+  border: 0.1vmin solid black;
+  background-color: rgb(166, 170, 173);
+  margin-left: 40.6vmin;
+  border-right: 0.3vmin solid white;
+}
+.minus,
+.plus {
+  height: 2vmin;
+  width: 100%;
+  text-align: center;
+  font-family: digi;
+  background-color: rgb(53, 81, 173);
+  line-height: 2.2vmin;
+  font-size: 5vmin;
+  border-radius: 2vmin;
+  cursor: pointer;
+}
+.minus {
+  margin-top: 11vmin;
+}
+.plus::after {
+  content: "+";
+}
+.minus::after {
+  content: "-";
+}
