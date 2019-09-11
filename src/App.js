@@ -10,6 +10,7 @@ import defaultSoundList from "./components/defaultSounds";
 function App() {
   const [soundList, setList] = useState(defaultSoundList);
   const [soundToAdd, setSoundToAdd] = useState(null);
+  const [buttonsMuted, setButtonsMuted] = useState(false);
   const [
     selectedSoundEntryIndexArray,
     setSelectedSoundEntryIndexArray
@@ -23,13 +24,17 @@ function App() {
   return (
     <div className="App">
       <Background night={nightVideo} />
-      <Clock className="clock-position" />
-      <SoundPicker setSelectedSong={setSoundToAdd} />
+      <Clock
+        className="clock-position"
+        {...{ buttonsMuted, setButtonsMuted }}
+      />
+      <SoundPicker setSelectedSong={setSoundToAdd} mute={buttonsMuted} />
       <SoundList
         {...{
           setList,
           selectedSoundEntryIndexArray,
-          setSelectedSoundEntryIndexArray
+          setSelectedSoundEntryIndexArray,
+          mute:buttonsMuted
         }}
       >
         {soundList}

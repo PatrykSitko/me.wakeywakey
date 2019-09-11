@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import {playSound,sounds as sound} from "../helpers/soundPlayer";
 import ReactDOM from "react-dom";
 import "./soundList.css";
 
@@ -50,7 +51,7 @@ function vmin(value) {
 function SoundList({
   selectedSoundEntryIndexArray,
   setSelectedSoundEntryIndexArray,
-  setList,
+  setList,mute,
   children: list
 }) {
   const soundList = checkList(list, setList);
@@ -85,7 +86,7 @@ function SoundList({
               selectedSoundEntryIndexArray,
               setSelectedSoundEntryIndexArray,
               soundEntries: sounds,
-              setSoundEntries: setList
+              setSoundEntries: setList,mute
             }}
             soundImage={sound.image}
             soundName={sound.name.replace(".mp3", "")}
@@ -117,18 +118,20 @@ function useFileInputHandler(soundIndex, soundEntries, setSoundEntries) {
   });
   return { inputElement, fileException };
 }
-function SoundImagePicker({soundIndex, soundEntries, setSoundEntries}) {
+function SoundImagePicker({soundIndex, soundEntries, setSoundEntries,mute}) {
   const { inputElement, fileException } = useFileInputHandler(
     soundIndex,
     soundEntries,
     setSoundEntries
   );
   return (
-    <div
+    <div 
+    onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
+    onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
       className={`image-picker${
         fileException ? " image-picker-exception" : ""
       }`}
-      onClick={() => !fileException && inputElement.click()}
+      onClick={() => !fileException && playSound(sound.tick,mute)&&inputElement.click()}
     >
       {fileException && ["WRONG", <br />, "FILE", <br />, "TYPE"]}
     </div>
@@ -139,10 +142,12 @@ function SoundListEntry({
   selectedSoundEntryIndexArray,
   setSelectedSoundEntryIndexArray,
   soundEntries,
-  setSoundEntries
+  setSoundEntries,mute
 }) {
   return (
     <li
+    onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
+    onClick={() => playSound(sound.tick,mute)}
       className={`sound-list-entry${
         selectedSoundEntryIndexArray.includes(index)
           ? " sound-list-entry-selected"
@@ -155,7 +160,7 @@ function SoundListEntry({
           alt=""
           onClick={() =>
             selectedSoundEntryIndexArray.includes(index)
-              ? setSelectedSoundEntryIndexArray(
+              ?setSelectedSoundEntryIndexArray(
                   selectedSoundEntryIndexArray.filter(entry => entry !== index)
                 )
               : setSelectedSoundEntryIndexArray(
@@ -168,7 +173,7 @@ function SoundListEntry({
           {...{
             soundIndex: index,
             soundEntries,
-            setSoundEntries
+            setSoundEntries,mute
           }}
         />
       )}

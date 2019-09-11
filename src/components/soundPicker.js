@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {playSound,sounds as sound} from "../helpers/soundPlayer";
 import "./soundPicker.css";
 
 function useFileInputHandler(setSelectedSong, setFileException) {
@@ -21,7 +22,7 @@ function useFileInputHandler(setSelectedSong, setFileException) {
   });
   return inputElement;
 }
-function SoundPicker({ setSelectedSong }) {
+function SoundPicker({ setSelectedSong,mute }) {
   const [fileException, setFileException] = useState(false);
   const inputElement = useFileInputHandler(setSelectedSong, setFileException);
   return (
@@ -29,7 +30,9 @@ function SoundPicker({ setSelectedSong }) {
       className={`sound-picker${
         fileException ? " sound-picker-file-exception" : ""
       }`}
-      onClick={() => !fileException && inputElement.click()}
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onClick={() => !fileException &&playSound(sound.tick, mute)&& inputElement.click()}
     >
       {fileException ? 'ADD a wakey "SONG"' : "ADD a wakey song"}
     </div>

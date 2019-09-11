@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
-import tickSound from "../sounds/buttons/tick.mp3";
+import {playSound,sounds as sound} from "../helpers/soundPlayer";
 import speakerImage from "../images/speaker.svg";
 import speakerMutedImage from "../images/speaker-muted.svg";
 import "./clock.css";
 
-function playTickSound() {
-  const player = document.createElement("audio");
-  player.setAttribute("src", tickSound);
-  player.play();
-}
 
 function useMinutesCalibrator(
   hoursLeft,
@@ -194,7 +189,7 @@ const minutes =
     ? date.getMinutes().toString()
     : "0".concat(date.getMinutes().toString());
 
-function Clock({ hideUI, className, ...props }) {
+function Clock({ hideUI, className,buttonsMuted, setButtonsMuted, ...props }) {
   const [hoursLeft, setHoursLeft] = useState(parseInt(hours.slice(0, 1)));
   const [hoursLeftAction, setHoursLeftAction] = useState("none");
   const [hoursRight, setHoursRight] = useState(parseInt(hours.slice(1, 2)));
@@ -204,7 +199,6 @@ function Clock({ hideUI, className, ...props }) {
   const [minutesRight, setMinutesRight] = useState(
     parseInt(minutes.slice(1, 2))
   );
-  const [buttonsMuted, setButtonsMuted] = useState(false);
   useMinutesCalibrator(
     hoursLeft,
     hoursRight,
@@ -287,7 +281,7 @@ function Clock({ hideUI, className, ...props }) {
   );
 }
 
-function Number({ mute, setNumber,hideUI, disabled, children: number }) {
+function Number({ mute, setNumber, hideUI, disabled, children: number }) {
   if (number > 9) {
     setNumber(0);
     number = 0;
@@ -296,19 +290,19 @@ function Number({ mute, setNumber,hideUI, disabled, children: number }) {
     setNumber(9);
     number = 9;
   }
-  const style={opacity:hideUI?0:1};
+  const style = { opacity: hideUI ? 0 : 1 };
   return [
     <div
       key="plus"
-      {...{style}}
+      {...{ style }}
       className="plus"
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
       onClick={() => {
         if (disabled) {
           return;
         }
-        if (!mute) {
-          playTickSound();
-        }
+        playSound(sound.tick, mute);
         const oldNumber = parseInt(number);
         setNumber(oldNumber >= 9 ? 0 : oldNumber + 1);
       }}
@@ -324,15 +318,15 @@ function Number({ mute, setNumber,hideUI, disabled, children: number }) {
     </div>,
     <div
       key="minus"
-      {...{style}}
+      {...{ style }}
       className="minus"
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
       onClick={() => {
         if (disabled) {
           return;
         }
-        if (!mute) {
-          playTickSound();
-        }
+        playSound(sound.tick, mute);
         const oldNumber = parseInt(number);
         setNumber(oldNumber <= 0 ? 9 : oldNumber - 1);
       }}
