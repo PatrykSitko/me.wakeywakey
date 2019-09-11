@@ -12,10 +12,46 @@ import militaryImage from "../images/sound_military.png";
 import militarySound from "../sounds/military.mp3";
 
 export default [
-  { name: "alien invasion", image: alienImage, src: alienSound },
-  { name: "classic clock", image: classicImage, src: classicSound },
-  { name: "cockerel", image: cockImage, src: cockSound },
-  { name: "electronic", image: electronicImage, src: electronicSound },
-  { name: "heavy metal guitar", image: guitarImage, src: guitarSound },
-  { name: "military trumpet", image: militaryImage, src: militarySound }
+  {
+    name: "alien invasion",
+    image: alienImage,
+    src: alienSound,
+    defaultSound: true,
+    hidden: false
+  },
+  {
+    name: "classic clock",
+    image: classicImage,
+    src: classicSound,
+    defaultSound: true,
+    hidden: false
+  },
+  {
+    name: "cockerel",
+    image: cockImage,
+    src: cockSound,
+    defaultSound: true,
+    hidden: false
+  },
+  {
+    name: "electronic",
+    image: electronicImage,
+    src: electronicSound,
+    defaultSound: true,
+    hidden: false
+  },
+  {
+    name: "heavy metal guitar",
+    image: guitarImage,
+    src: guitarSound,
+    defaultSound: true,
+    hidden: false
+  },
+  {
+    name: "military trumpet",
+    image: militaryImage,
+    src: militarySound,
+    defaultSound: true,
+    hidden: false
+  }
 ];
