@@ -10,6 +10,7 @@ import defaultSoundList from "./components/defaultSounds";
 function App() {
   const [soundList, setList] = useState(defaultSoundList);
   const [soundToAdd, setSoundToAdd] = useState(null);
+  const [selectedSoundEntryIndex, setSelectedSoundEntryIndex] = useState(null);
   useEffect(() => {
     if (soundToAdd) {
       setList([soundToAdd].concat(soundList));
@@ -21,7 +22,15 @@ function App() {
       <Background night={nightVideo} />
       <Clock className="clock-position" />
       <SoundPicker setSelectedSong={setSoundToAdd} />
-      <SoundList {...{ setList }}>{soundList}</SoundList>
+      <SoundList
+        {...{
+          setList,
+          selectedSoundEntryIndex,
+          setSelectedSoundEntryIndex
+        }}
+      >
+        {soundList}
+      </SoundList>
     </div>
   );
 }

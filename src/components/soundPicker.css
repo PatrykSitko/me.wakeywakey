@@ -1,12 +1,12 @@
-.notify-about-file-format-exception,
 .sound-picker {
   background-color: rgb(53, 81, 173);
   color: black;
-  width: 51.5vmin;
+  width: 46.5vmin;
   border: 0.3vmin solid rgb(158, 151, 151);
+  border-bottom: 0vmin solid #000000;
   border-radius: 1vmin;
-  border-bottom-left-radius: 60%;
-  border-bottom-right-radius: 60%;
+  border-top-left-radius: 60%;
+  border-top-right-radius: 60%;
   font-size: 3vmin;
   font-weight: bolder;
   text-align: center;
@@ -14,7 +14,7 @@
   cursor: pointer;
   margin: auto;
   transition: color 0.5s, background-color 0.5s;
-  margin-bottom: 3vmin;
+  margin-top: 3vmin;
   user-select: none;
 }
 .sound-picker:hover {

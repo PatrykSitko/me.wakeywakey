@@ -29,7 +29,7 @@
   border: 1.5px solid rgb(34, 58, 136);
   border-radius: 3vmin;
 }
-.sound-list li {
+.sound-list-entry {
   display: flex;
   background-color: #00000000;
   border: 0.3vmin solid #00000000;
@@ -37,20 +37,24 @@
   cursor: pointer;
   user-select: none;
 }
-.sound-list li:hover {
-  border: 0.3vmin solid #00000000;
+.sound-list-entry:hover {
   background-color: rgb(207, 199, 199);
   border: 0.3vmin solid black;
   border-left: 0.3vmin solid #00000000;
 }
-
+.sound-list-entry-selected {
+  background-color: rgb(221, 212, 212);
+  border: 0.3vmin solid black;
+  border-left: 0.3vmin solid #00000000;
+  color: black;
+}
 .image-picker {
   background-image: url(../images/add-image.svg);
   background-repeat: no-repeat;
   background-size: cover;
 }
 .image-picker,
-.sound-list li img {
+.sound-list-entry img {
   margin-top: 0.3vmin;
   border-radius: 25%;
   border-top-right-radius: 0;
@@ -60,7 +64,7 @@
   margin-left: 1.5vmin;
   border: 0.3vmin solid rgb(207, 199, 199);
 }
-.sound-list li p {
+.sound-list-entry p {
   padding-left: 1vmin;
   margin: 0.3vmin 0;
   width: calc(100% - 11vmin);

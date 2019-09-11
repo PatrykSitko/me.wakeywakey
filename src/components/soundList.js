@@ -47,7 +47,12 @@ function vmin(value) {
 //     ? window.innerHeight * value
 //     : window.innerWidth * value;
 // }
-function SoundList({ setList, children: list }) {
+function SoundList({
+  selectedSoundEntryIndex,
+  setSelectedSoundEntryIndex,
+  setList,
+  children: list
+}) {
   const soundList = checkList(list, setList);
   const ref = useRef();
   const [maxHeight, setMaxHeight] = useState(undefined);
@@ -78,6 +83,7 @@ function SoundList({ setList, children: list }) {
       <ul className="sound-list" style={{ maxHeight }}>
         {soundList.map((sound, index) => (
           <SoundListEntry
+            {...{ index, selectedSoundEntryIndex, setSelectedSoundEntryIndex }}
             key={index}
             soundImage={sound.image}
             soundName={sound.name.replace(".mp3", "")}
@@ -91,11 +97,41 @@ function SoundList({ setList, children: list }) {
 function SoundImagePicker() {
   return <div className="image-picker"></div>;
 }
-function SoundListEntry({ key, soundImage, soundName }) {
+function SoundListEntry({
+  index,
+  selectedSoundEntryIndex,
+  setSelectedSoundEntryIndex,
+  soundImage,
+  soundName
+}) {
   return (
-    <li key={key}>
-      {soundImage ? <img src={soundImage} alt="" /> : <SoundImagePicker />}
-      <p>{soundName}</p>
+    <li
+      className={`sound-list-entry${
+        selectedSoundEntryIndex === index ? " sound-list-entry-selected" : ""
+      }`}
+    >
+      {soundImage ? (
+        <img
+          src={soundImage}
+          alt=""
+          onClick={() =>
+            selectedSoundEntryIndex === index
+              ? setSelectedSoundEntryIndex(null)
+              : setSelectedSoundEntryIndex(index)
+          }
+        />
+      ) : (
+        <SoundImagePicker />
+      )}
+      <p
+        onClick={() =>
+          selectedSoundEntryIndex === index
+            ? setSelectedSoundEntryIndex(null)
+            : setSelectedSoundEntryIndex(index)
+        }
+      >
+        {soundName}
+      </p>
     </li>
   );
 }
