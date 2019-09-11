@@ -5,6 +5,9 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 window.onload = function() {
+  if (window.location.pathname !== "/") {
+    window.history.pushState(null, "Wakey Wakey", "/");
+  }
   document.addEventListener(
     "contextmenu",
     function(e) {
@@ -14,8 +17,7 @@ window.onload = function() {
   );
   document.addEventListener(
     "keydown",
-    function(e) {
-      //document.onkeydown = function(e) {
+    e => {
       // "I" key
       if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
         disabledEvent(e);
@@ -26,7 +28,7 @@ window.onload = function() {
       }
       // "S" key + macOS
       if (
-        e.keyCode == 83 &&
+        e.keyCode === 83 &&
         (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)
       ) {
         disabledEvent(e);
@@ -36,9 +38,9 @@ window.onload = function() {
         disabledEvent(e);
       }
       // "F12" key
-      if (e.keyCode === 123) {
-        disabledEvent(e);
-      }
+      //   if (e.keyCode === 123) {
+      //     disabledEvent(e);
+      //   }
     },
     false
   );

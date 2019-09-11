@@ -28,7 +28,7 @@ function useWindowDimensionsListener(setWindowDimensions) {
       "resize",
       updateWindowDimensions.bind(this, setWindowDimensions)
     );
-  }, []);
+  }, [setWindowDimensions]);
 }
 
 /**
@@ -48,8 +48,8 @@ function vmin(value) {
 //     : window.innerWidth * value;
 // }
 function SoundList({
-  selectedSoundEntryIndex,
-  setSelectedSoundEntryIndex,
+  selectedSoundEntryIndexArray,
+  setSelectedSoundEntryIndexArray,
   setList,
   children: list
 }) {
@@ -65,10 +65,6 @@ function SoundList({
     const soundListContainerRect = ReactDOM.findDOMNode(
       ref.current
     ).getBoundingClientRect();
-    console.log(
-      "max height:",
-      windowDimensions.height - soundListContainerRect.y
-    );
     if (
       maxHeight !==
       windowDimensions.height - soundListContainerRect.y - vmin(0.085)
@@ -81,10 +77,16 @@ function SoundList({
   return (
     <div className="sound-list-container" ref={ref}>
       <ul className="sound-list" style={{ maxHeight }}>
-        {soundList.map((sound, index) => (
+        {soundList.map((sound, index, sounds) => (
           <SoundListEntry
-            {...{ index, selectedSoundEntryIndex, setSelectedSoundEntryIndex }}
             key={index}
+            {...{
+              index,
+              selectedSoundEntryIndexArray,
+              setSelectedSoundEntryIndexArray,
+              soundEntries: sounds,
+              setSoundEntries: setList
+            }}
             soundImage={sound.image}
             soundName={sound.name.replace(".mp3", "")}
           />
@@ -94,43 +96,94 @@ function SoundList({
   );
 }
 
-function SoundImagePicker() {
-  return <div className="image-picker"></div>;
+function useFileInputHandler(soundIndex, soundEntries, setSoundEntries) {
+  const [fileException, setFileException] = useState(false);
+  let inputElement = document.createElement("input");
+  inputElement.setAttribute("type", "file");
+  inputElement.setAttribute("accept", "image/*");
+  inputElement.addEventListener("change", event => {
+    if (event.target.files[0].type.includes("image")) {
+      setFileException(false);
+      const soundEntriesCopy = soundEntries;
+      soundEntriesCopy[soundIndex].image = URL.createObjectURL(
+        event.target.files[0]
+      );
+      setSoundEntries(soundEntriesCopy);
+    } else {
+      setFileException(true);
+      setTimeout(() => setFileException(false), 2500);
+    }
+    inputElement.setAttribute("value", "");
+  });
+  return { inputElement, fileException };
+}
+function SoundImagePicker({soundIndex, soundEntries, setSoundEntries}) {
+  const { inputElement, fileException } = useFileInputHandler(
+    soundIndex,
+    soundEntries,
+    setSoundEntries
+  );
+  return (
+    <div
+      className={`image-picker${
+        fileException ? " image-picker-exception" : ""
+      }`}
+      onClick={() => !fileException && inputElement.click()}
+    >
+      {fileException && ["WRONG", <br />, "FILE", <br />, "TYPE"]}
+    </div>
+  );
 }
 function SoundListEntry({
   index,
-  selectedSoundEntryIndex,
-  setSelectedSoundEntryIndex,
-  soundImage,
-  soundName
+  selectedSoundEntryIndexArray,
+  setSelectedSoundEntryIndexArray,
+  soundEntries,
+  setSoundEntries
 }) {
   return (
     <li
       className={`sound-list-entry${
-        selectedSoundEntryIndex === index ? " sound-list-entry-selected" : ""
+        selectedSoundEntryIndexArray.includes(index)
+          ? " sound-list-entry-selected"
+          : ""
       }`}
     >
-      {soundImage ? (
+      {soundEntries[index].image ? (
         <img
-          src={soundImage}
+          src={soundEntries[index].image}
           alt=""
           onClick={() =>
-            selectedSoundEntryIndex === index
-              ? setSelectedSoundEntryIndex(null)
-              : setSelectedSoundEntryIndex(index)
+            selectedSoundEntryIndexArray.includes(index)
+              ? setSelectedSoundEntryIndexArray(
+                  selectedSoundEntryIndexArray.filter(entry => entry !== index)
+                )
+              : setSelectedSoundEntryIndexArray(
+                  selectedSoundEntryIndexArray.concat(index)
+                )
           }
         />
       ) : (
-        <SoundImagePicker />
+        <SoundImagePicker
+          {...{
+            soundIndex: index,
+            soundEntries,
+            setSoundEntries
+          }}
+        />
       )}
       <p
         onClick={() =>
-          selectedSoundEntryIndex === index
-            ? setSelectedSoundEntryIndex(null)
-            : setSelectedSoundEntryIndex(index)
+          selectedSoundEntryIndexArray.includes(index)
+            ? setSelectedSoundEntryIndexArray(
+                selectedSoundEntryIndexArray.filter(entry => entry !== index)
+              )
+            : setSelectedSoundEntryIndexArray(
+                selectedSoundEntryIndexArray.concat(index)
+              )
         }
       >
-        {soundName}
+        {soundEntries[index].name}
       </p>
     </li>
   );

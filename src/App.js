@@ -10,7 +10,10 @@ import defaultSoundList from "./components/defaultSounds";
 function App() {
   const [soundList, setList] = useState(defaultSoundList);
   const [soundToAdd, setSoundToAdd] = useState(null);
-  const [selectedSoundEntryIndex, setSelectedSoundEntryIndex] = useState(null);
+  const [
+    selectedSoundEntryIndexArray,
+    setSelectedSoundEntryIndexArray
+  ] = useState([]);
   useEffect(() => {
     if (soundToAdd) {
       setList([soundToAdd].concat(soundList));
@@ -25,8 +28,8 @@ function App() {
       <SoundList
         {...{
           setList,
-          selectedSoundEntryIndex,
-          setSelectedSoundEntryIndex
+          selectedSoundEntryIndexArray,
+          setSelectedSoundEntryIndexArray
         }}
       >
         {soundList}
