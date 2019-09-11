@@ -15,7 +15,7 @@ function useFileInputHandler(setSelectedSong, setFileException) {
       });
     } else {
       setFileException(true);
-      setTimeout(() => setFileException(false), 1500);
+      setTimeout(() => setFileException(false), 2500);
     }
     inputElement.setAttribute("value", "");
   });

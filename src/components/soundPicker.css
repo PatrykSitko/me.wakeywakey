@@ -2,7 +2,7 @@
   background-color: rgb(53, 81, 173);
   color: black;
   width: 46.5vmin;
-  border: 0.3vmin solid rgb(158, 151, 151);
+  border: 0.3vmin solid rgb(180, 185, 196);
   border-bottom: 0vmin solid #000000;
   border-radius: 1vmin;
   border-top-left-radius: 60%;
@@ -27,4 +27,5 @@
   background-color: rgb(241, 90, 90);
   color: aliceblue;
   cursor: url(../images/question.png), auto;
+  border-color: red;
 }

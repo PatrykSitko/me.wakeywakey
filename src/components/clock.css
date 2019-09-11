@@ -24,7 +24,8 @@
   border-radius: 3vmin;
   width: 54.5vmin;
   height: 20vmin;
-  border: 0.3vmin solid rgb(158, 151, 151);
+  border: 0.3vmin solid rgb(180, 185, 196);
+  border-top-right-radius: 1.3vmin;
   display: flex;
 }
 .clock-time {
@@ -91,6 +92,18 @@
   background-color: rgb(166, 170, 173);
   margin-left: 40.6vmin;
   border-right: 0.3vmin solid white;
+}
+.clock-buttons-mute {
+  position: absolute;
+  display: inline-block;
+  width: 2.5vmin;
+  height: 2.5vmin;
+  margin-left: 52vmin;
+  border-bottom: 0.1vmin solid aliceblue;
+  border-left: 0.1vmin solid aliceblue;
+  border-bottom-left-radius: 1.3vmin;
+  cursor: pointer;
+  -webkit-user-drag: none;
 }
 .minus,
 .plus {

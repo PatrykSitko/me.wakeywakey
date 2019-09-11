@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
+import tickSound from "../sounds/buttons/tick.mp3";
+import speakerImage from "../images/speaker.svg";
+import speakerMutedImage from "../images/speaker-muted.svg";
 import "./clock.css";
+
+function playTickSound() {
+  const player = document.createElement("audio");
+  player.setAttribute("src", tickSound);
+  player.play();
+}
 
 function useMinutesCalibrator(
   hoursLeft,
@@ -185,7 +194,7 @@ const minutes =
     ? date.getMinutes().toString()
     : "0".concat(date.getMinutes().toString());
 
-function Clock({ className, ...props }) {
+function Clock({ hideUI, className, ...props }) {
   const [hoursLeft, setHoursLeft] = useState(parseInt(hours.slice(0, 1)));
   const [hoursLeftAction, setHoursLeftAction] = useState("none");
   const [hoursRight, setHoursRight] = useState(parseInt(hours.slice(1, 2)));
@@ -195,6 +204,7 @@ function Clock({ className, ...props }) {
   const [minutesRight, setMinutesRight] = useState(
     parseInt(minutes.slice(1, 2))
   );
+  const [buttonsMuted, setButtonsMuted] = useState(false);
   useMinutesCalibrator(
     hoursLeft,
     hoursRight,
@@ -227,23 +237,57 @@ function Clock({ className, ...props }) {
       className={`clock${className ? " ".concat(className) : ""}`}
     >
       <div className="clock-time clock-hours-left">
-        <Number setNumber={setHoursLeft}>{hoursLeft}</Number>
+        <Number
+          {...{ hideUI }}
+          disabled={hideUI}
+          mute={buttonsMuted}
+          setNumber={setHoursLeft}
+        >
+          {hoursLeft}
+        </Number>
       </div>
       <div className="clock-time clock-hours-right">
-        <Number setNumber={setHoursRight}>{hoursRight}</Number>
+        <Number
+          {...{ hideUI }}
+          disabled={hideUI}
+          mute={buttonsMuted}
+          setNumber={setHoursRight}
+        >
+          {hoursRight}
+        </Number>
       </div>
       <div className="clock-separator">:</div>
       <div className="clock-time clock-minutes-left">
-        <Number setNumber={setMinutesLeft}>{minutesLeft}</Number>
+        <Number
+          {...{ hideUI }}
+          disabled={hideUI}
+          mute={buttonsMuted}
+          setNumber={setMinutesLeft}
+        >
+          {minutesLeft}
+        </Number>
       </div>
       <div className="clock-time clock-minutes-right">
-        <Number setNumber={setMinutesRight}>{minutesRight}</Number>
+        <Number
+          {...{ hideUI }}
+          disabled={hideUI}
+          mute={buttonsMuted}
+          setNumber={setMinutesRight}
+        >
+          {minutesRight}
+        </Number>
       </div>
+      <img
+        className="clock-buttons-mute"
+        src={buttonsMuted ? speakerMutedImage : speakerImage}
+        alt=""
+        onClick={() => setButtonsMuted(!buttonsMuted)}
+      />
     </div>
   );
 }
 
-function Number({ setNumber, disabled, children: number }) {
+function Number({ mute, setNumber,hideUI, disabled, children: number }) {
   if (number > 9) {
     setNumber(0);
     number = 0;
@@ -252,13 +296,18 @@ function Number({ setNumber, disabled, children: number }) {
     setNumber(9);
     number = 9;
   }
+  const style={opacity:hideUI?0:1};
   return [
     <div
       key="plus"
+      {...{style}}
       className="plus"
-      onMouseDown={() => {
+      onClick={() => {
         if (disabled) {
           return;
+        }
+        if (!mute) {
+          playTickSound();
         }
         const oldNumber = parseInt(number);
         setNumber(oldNumber >= 9 ? 0 : oldNumber + 1);
@@ -275,10 +324,14 @@ function Number({ setNumber, disabled, children: number }) {
     </div>,
     <div
       key="minus"
+      {...{style}}
       className="minus"
-      onMouseDown={() => {
+      onClick={() => {
         if (disabled) {
           return;
+        }
+        if (!mute) {
+          playTickSound();
         }
         const oldNumber = parseInt(number);
         setNumber(oldNumber <= 0 ? 9 : oldNumber - 1);
