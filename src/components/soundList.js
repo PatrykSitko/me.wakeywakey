@@ -156,7 +156,11 @@ function SoundListEntry({
   return (
     <li
       onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
-      onClick={() => playSound(sound.tick, mute)}
+      onClick={() =>
+        !selectedSoundEntryIndexArray.includes(index)
+          ? playSound(sound.select, mute)
+          : playSound(sound.deselect, mute)
+      }
       className={`sound-list-entry${
         selectedSoundEntryIndexArray.includes(index)
           ? " sound-list-entry-selected"
