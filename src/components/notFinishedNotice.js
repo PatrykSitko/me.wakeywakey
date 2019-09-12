@@ -3,7 +3,7 @@ import "./notFinishedNotice.css";
 
 function NotFinishedNotice() {
   return (
-    <div className="not-finnished-notice">
+    <div className="not-finished-notice">
       Dear user, this website is not finished yet.
       <br />I started working on it since 10/11/2019
       <br />
