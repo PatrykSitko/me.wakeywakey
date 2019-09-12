@@ -7,8 +7,8 @@ function NotFinishedNotice() {
       Dear user, this website is not finished yet.
       <br />I started working on it since 10 september (2019).
       <br />
-      Please give me a week to implemend all desired functionality, thx in
-      advance 😊
+      Please give me a week and three days to implemend all desired
+      functionality, thx in advance 😊
     </div>
   );
 }

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {playSound,sounds as sound} from "../helpers/soundPlayer";
+import { playSound, sounds as sound } from "./soundPlayer";
 import speakerImage from "../images/speaker.svg";
 import speakerMutedImage from "../images/speaker-muted.svg";
 import "./clock.css";
-
 
 function useMinutesCalibrator(
   hoursLeft,
@@ -189,7 +188,7 @@ const minutes =
     ? date.getMinutes().toString()
     : "0".concat(date.getMinutes().toString());
 
-function Clock({ hideUI, className,buttonsMuted, setButtonsMuted, ...props }) {
+function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
   const [hoursLeft, setHoursLeft] = useState(parseInt(hours.slice(0, 1)));
   const [hoursLeftAction, setHoursLeftAction] = useState("none");
   const [hoursRight, setHoursRight] = useState(parseInt(hours.slice(1, 2)));
