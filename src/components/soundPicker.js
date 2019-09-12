@@ -32,7 +32,7 @@ function SoundPicker({ setSelectedSong,mute }) {
       }`}
       onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
       onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
-      onClick={() => !fileException &&playSound(sound.tick, mute)&& inputElement.click()}
+      onClick={() => !fileException &&playSound(sound.confirm, mute)&& inputElement.click()}
     >
       {fileException ? 'ADD a wakey "SONG"' : "ADD a wakey song"}
     </div>

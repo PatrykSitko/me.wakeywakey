@@ -138,7 +138,7 @@ function SoundImagePicker({ soundIndex, soundEntries, setSoundEntries, mute }) {
         fileException ? " image-picker-exception" : ""
       }`}
       onClick={() =>
-        !fileException && playSound(sound.tick, mute) && inputElement.click()
+        !fileException && playSound(sound.confirm, mute) && inputElement.click()
       }
     >
       {fileException && ["WRONG", <br />, "FILE", <br />, "TYPE"]}
