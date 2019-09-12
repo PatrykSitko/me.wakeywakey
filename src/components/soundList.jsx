@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { playSound, sounds as sound } from "../helpers/soundPlayer";
+import { playSound, sounds as sound } from "./soundPlayer";
 import ReactDOM from "react-dom";
 import "./soundList.css";
 
