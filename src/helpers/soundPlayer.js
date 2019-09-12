@@ -9,7 +9,6 @@ export function playSound(sound, mute, volume) {
   }
   const player = document.createElement("audio");
   player.setAttribute("src", sound);
-  console.log(volume);
   player.volume = soundVolume;
   player.play();
   return true;
