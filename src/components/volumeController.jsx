@@ -13,3 +13,5 @@ function VolumeController({ volume, setVolume, className, ...props }) {
     />
   );
 }
+
+export default VolumeController;
