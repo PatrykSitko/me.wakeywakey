@@ -1,0 +1,16 @@
+.not-finished-notice {
+  position: fixed;
+  top: 0;
+  left: calc(50% - 27.25vmin);
+  background-color: rgba(0, 0, 0, 0.493);
+  color: rgb(180, 185, 196);
+  border: 0.3vmin solid aliceblue;
+  width: 54.5vmin;
+  height: 14vmin;
+  font-size: 2.5vmin;
+  border-bottom-left-radius: 3vmin;
+  border-bottom-right-radius: 3vmin;
+  text-align: center;
+  padding: 0.5vmin 0;
+  overflow-y: auto;
+}

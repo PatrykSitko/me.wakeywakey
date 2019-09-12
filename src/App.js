@@ -4,8 +4,9 @@ import Clock from "./components/clock";
 import Background from "./components/background";
 import SoundPicker from "./components/soundPicker";
 import SoundList from "./components/soundList";
-import nightVideo from "./videos/night-background.webm";
 import defaultSoundList from "./components/defaultSounds";
+import NotFinishedNotice from "./components/notFinishedNotice";
+import nightVideo from "./videos/night-background.webm";
 
 function App() {
   const [soundList, setList] = useState(defaultSoundList);
@@ -24,6 +25,7 @@ function App() {
   return (
     <div className="App">
       <Background night={nightVideo} />
+      <NotFinishedNotice />
       <Clock
         className="clock-position"
         {...{ buttonsMuted, setButtonsMuted }}
@@ -34,7 +36,7 @@ function App() {
           setList,
           selectedSoundEntryIndexArray,
           setSelectedSoundEntryIndexArray,
-          mute:buttonsMuted
+          mute: buttonsMuted
         }}
       >
         {soundList}
