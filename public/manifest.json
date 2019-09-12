@@ -1,6 +1,6 @@
 {
   "short_name": "wakey wakey",
-  "name": "Wakey wakey alarm clock, made by Patryk Sitko.",
+  "name": "Wakey wakey alarm clock",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#00000000",
   "background_color": "#ffffff00"
