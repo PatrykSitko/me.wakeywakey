@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import {playSound,sounds as sound} from "../helpers/soundPlayer";
+import { playSound, sounds as sound } from "../helpers/soundPlayer";
 import ReactDOM from "react-dom";
 import "./soundList.css";
 
@@ -51,7 +51,8 @@ function vmin(value) {
 function SoundList({
   selectedSoundEntryIndexArray,
   setSelectedSoundEntryIndexArray,
-  setList,mute,
+  setList,
+  mute,
   children: list
 }) {
   const soundList = checkList(list, setList);
@@ -77,7 +78,11 @@ function SoundList({
   }, [ref, windowDimensions, maxHeight, setMaxHeight]);
   return (
     <div className="sound-list-container" ref={ref}>
-      <ul className="sound-list" style={{ maxHeight }}>
+      <ul
+        className="sound-list"
+        style={{ maxHeight }}
+        onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      >
         {soundList.map((sound, index, sounds) => (
           <SoundListEntry
             key={index}
@@ -86,7 +91,8 @@ function SoundList({
               selectedSoundEntryIndexArray,
               setSelectedSoundEntryIndexArray,
               soundEntries: sounds,
-              setSoundEntries: setList,mute
+              setSoundEntries: setList,
+              mute
             }}
             soundImage={sound.image}
             soundName={sound.name.replace(".mp3", "")}
@@ -118,20 +124,22 @@ function useFileInputHandler(soundIndex, soundEntries, setSoundEntries) {
   });
   return { inputElement, fileException };
 }
-function SoundImagePicker({soundIndex, soundEntries, setSoundEntries,mute}) {
+function SoundImagePicker({ soundIndex, soundEntries, setSoundEntries, mute }) {
   const { inputElement, fileException } = useFileInputHandler(
     soundIndex,
     soundEntries,
     setSoundEntries
   );
   return (
-    <div 
-    onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
-    onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
+    <div
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
       className={`image-picker${
         fileException ? " image-picker-exception" : ""
       }`}
-      onClick={() => !fileException && playSound(sound.tick,mute)&&inputElement.click()}
+      onClick={() =>
+        !fileException && playSound(sound.tick, mute) && inputElement.click()
+      }
     >
       {fileException && ["WRONG", <br />, "FILE", <br />, "TYPE"]}
     </div>
@@ -142,12 +150,13 @@ function SoundListEntry({
   selectedSoundEntryIndexArray,
   setSelectedSoundEntryIndexArray,
   soundEntries,
-  setSoundEntries,mute
+  setSoundEntries,
+  mute
 }) {
   return (
     <li
-    onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
-    onClick={() => playSound(sound.tick,mute)}
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onClick={() => playSound(sound.tick, mute)}
       className={`sound-list-entry${
         selectedSoundEntryIndexArray.includes(index)
           ? " sound-list-entry-selected"
@@ -160,7 +169,7 @@ function SoundListEntry({
           alt=""
           onClick={() =>
             selectedSoundEntryIndexArray.includes(index)
-              ?setSelectedSoundEntryIndexArray(
+              ? setSelectedSoundEntryIndexArray(
                   selectedSoundEntryIndexArray.filter(entry => entry !== index)
                 )
               : setSelectedSoundEntryIndexArray(
@@ -173,7 +182,8 @@ function SoundListEntry({
           {...{
             soundIndex: index,
             soundEntries,
-            setSoundEntries,mute
+            setSoundEntries,
+            mute
           }}
         />
       )}
