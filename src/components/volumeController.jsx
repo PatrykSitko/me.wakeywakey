@@ -2,14 +2,18 @@ import React from "react";
 import "./volumeController.css";
 
 function VolumeController({ volume, setVolume, className, ...props }) {
-  return (
+  return [
+    <div key="volume-controller" className="volume-controller" />,
     <div
       {...{
-        className: `volume-controller${className ? " " + className : ""}`,
+        key: "volume-controller-container",
+        className: `volume-controller-container${
+          className ? " " + className : ""
+        }`,
         ...props
       }}
-    />
-  );
+    ></div>
+  ];
 }
 
 export default VolumeController;

@@ -1,4 +1,5 @@
-.volume-controller {
+.volume-controller,
+.volume-controller-container {
   position: absolute;
   margin-top: 2.79vmin;
   margin-left: 53.48vmin;
@@ -7,6 +8,9 @@
   background-color: #00000000;
   padding: 0.3vmin 0;
   border-bottom-left-radius: 0.55vmin;
-  border-left: 0.3vmin solid white;
-  border-bottom: 0.3vmin solid white;
+  border-left: 0.3vmin solid rgb(180, 185, 196);
+  border-bottom: 0.3vmin solid rgb(180, 185, 196);
+}
+.volume-controller {
+  z-index: 3;
 }
