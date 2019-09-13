@@ -12,7 +12,10 @@ function VolumeController({ volume, setVolume, className, ...props }) {
         }`,
         ...props
       }}
-    ></div>
+    >
+      <div className="volume-controller-nob"/>
+      <div className="volume-controller-volume-indicator"/>
+    </div>
   ];
 }
 
