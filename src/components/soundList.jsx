@@ -105,27 +105,30 @@ function SoundList({
 
 function useFileInputHandler(soundIndex, soundEntries, setSoundEntries) {
   const [fileException, setFileException] = useState(false);
-  let inputElement = document.createElement("input");
-  inputElement.setAttribute("type", "file");
-  inputElement.setAttribute("accept", "image/*");
-  inputElement.addEventListener("change", event => {
-    if (event.target.files[0].type.includes("image")) {
-      setFileException(false);
-      const soundEntriesCopy = soundEntries;
-      soundEntriesCopy[soundIndex].image = URL.createObjectURL(
-        event.target.files[0]
-      );
-      setSoundEntries(soundEntriesCopy);
-    } else {
-      setFileException(true);
-      setTimeout(() => setFileException(false), 2500);
-    }
-    inputElement.setAttribute("value", "");
+  let inputElementPromise = new Promise(resolve => {
+    let inputElement = document.createElement("input");
+    inputElement.setAttribute("type", "file");
+    inputElement.setAttribute("accept", "image/*");
+    inputElement.addEventListener("change", event => {
+      if (event.target.files[0].type.includes("image")) {
+        setFileException(false);
+        const soundEntriesCopy = soundEntries;
+        soundEntriesCopy[soundIndex].image = URL.createObjectURL(
+          event.target.files[0]
+        );
+        setSoundEntries(soundEntriesCopy);
+      } else {
+        setFileException(true);
+        setTimeout(() => setFileException(false), 2500);
+      }
+    inputElement = null;
+    });
+    resolve(inputElement);
   });
-  return { inputElement, fileException };
+  return { inputElementPromise, fileException };
 }
 function SoundImagePicker({ soundIndex, soundEntries, setSoundEntries, mute }) {
-  const { inputElement, fileException } = useFileInputHandler(
+  const { inputElementPromise, fileException } = useFileInputHandler(
     soundIndex,
     soundEntries,
     setSoundEntries
@@ -138,7 +141,9 @@ function SoundImagePicker({ soundIndex, soundEntries, setSoundEntries, mute }) {
         fileException ? " image-picker-exception" : ""
       }`}
       onClick={() =>
-        !fileException && playSound(sound.confirm, mute) && inputElement.click()
+        !fileException &&
+        playSound(sound.confirm, mute) &&
+        inputElementPromise.then(inputElement => inputElement.click())
       }
     >
       {fileException && ["WRONG", <br />, "FILE", <br />, "TYPE"]}

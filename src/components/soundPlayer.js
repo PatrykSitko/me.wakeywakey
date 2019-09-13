@@ -10,9 +10,13 @@ export function playSound(sound, mute, volume) {
   if (mute) {
     return true;
   }
-  const player = document.createElement("audio");
-  player.setAttribute("src", sound);
-  player.volume = soundVolume;
-  player.play();
+  new Promise(resolve => {
+    let player = document.createElement("audio");
+    player.setAttribute("src", sound);
+    player.volume = soundVolume;
+    player.play();
+    player.addEventListener("ended", () => (player = null));
+    resolve(null);
+  });
   return true;
 }
