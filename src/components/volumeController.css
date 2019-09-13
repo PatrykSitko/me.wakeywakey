@@ -1,2 +1,12 @@
 .volume-controller {
+  position: absolute;
+  margin-top: 2.79vmin;
+  margin-left: 53.48vmin;
+  width: 1vmin;
+  height: 11.65vmin;
+  background-color: rgb(47, 46, 46);
+  padding: 0.3vmin 0;
+  border-bottom-left-radius: 0.55vmin;
+  border-left: 0.3vmin solid white;
+  border-bottom: 0.3vmin solid white;
 }

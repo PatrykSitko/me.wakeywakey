@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { playSound, sounds as sound } from "./soundPlayer";
+import VolumeController from "./volumeController";
 import speakerImage from "../images/speaker.svg";
 import speakerMutedImage from "../images/speaker-muted.svg";
 import "./clock.css";
@@ -276,6 +277,7 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
         alt=""
         onClick={() => setButtonsMuted(!buttonsMuted)}
       />
+      <VolumeController/>
     </div>
   );
 }
