@@ -6,7 +6,7 @@
   left: 3.3vmin;
   position: absolute;
   z-index: 0;
-  color: rgba(12, 238, 208, 0.3);
+  color: rgba(12, 238, 208, 0.1);
   user-select: none;
 }
 .number {
@@ -20,7 +20,7 @@
   left: 6.3vmin;
 }
 .clock {
-  background-color: rgb(47, 46, 46);
+  background-color: rgba(47, 46, 46, 0.65);
   border-radius: 3vmin;
   width: 54.5vmin;
   height: 20vmin;
@@ -32,6 +32,7 @@
   font-family: digi;
   text-align: center;
   font-size: 11vmin;
+  background-color: rgba(166, 170, 173, 0.85);
 }
 .clock-hours-left {
   position: absolute;
@@ -41,7 +42,6 @@
   height: 15vmin;
   width: 12vmin;
   border-radius: 1.5vmin;
-  background-color: rgb(166, 170, 173);
   border-left: 0.3vmin solid white;
 }
 .clock-hours-right {
@@ -52,13 +52,13 @@
   width: 12vmin;
   border-radius: 1.5vmin;
   border-left: 0.1vmin solid black;
-  background-color: rgb(166, 170, 173);
   margin-left: 13.5vmin;
 }
 .clock-separator {
   position: absolute;
   border-left: 0.1vmin solid black;
   border-right: 0.1vmin solid black;
+  background-color: rgba(185, 189, 192, 0.75);
   line-height: 11.5vmin;
   font-size: 12vmin;
   text-align: center;
@@ -67,7 +67,6 @@
   height: 15vmin;
   width: 3vmin;
   border-radius: 1.5vmin;
-  background-color: rgb(185, 189, 192);
   margin-left: 25.5vmin;
   user-select: none;
 }
@@ -78,7 +77,6 @@
   height: 15vmin;
   width: 12vmin;
   border-radius: 1.5vmin;
-  background-color: rgb(166, 170, 173);
   margin-left: 28.7vmin;
 }
 .clock-minutes-right {
@@ -89,7 +87,6 @@
   width: 12vmin;
   border-radius: 1.5vmin;
   border: 0.1vmin solid black;
-  background-color: rgb(166, 170, 173);
   margin-left: 40.6vmin;
   border-right: 0.3vmin solid white;
 }
@@ -111,7 +108,7 @@
   width: 100%;
   text-align: center;
   font-family: digi;
-  background-color: rgb(53, 81, 173);
+  background-color: rgba(53, 81, 173, 0.75);
   line-height: 2.2vmin;
   font-size: 5vmin;
   border-radius: 2vmin;
@@ -121,7 +118,7 @@
 .plus:hover,
 .minus:hover {
   color: aliceblue;
-  background-color: rgb(36, 60, 141);
+  background-color: rgba(36, 60, 141, 0.75);
 }
 .minus {
   margin-top: 11vmin;
