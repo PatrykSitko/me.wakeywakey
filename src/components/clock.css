@@ -52,12 +52,12 @@
   width: 12vmin;
   border-radius: 1.5vmin;
   border-left: 0.1vmin solid black;
+  border-right: 0.1vmin solid black;
   margin-left: 13.5vmin;
 }
 .clock-separator {
   position: absolute;
-  border-left: 0.1vmin solid black;
-  border-right: 0.1vmin solid black;
+  border: 0.1vmin solid aliceblue;
   background-color: rgba(185, 189, 192, 0.75);
   line-height: 11.5vmin;
   font-size: 12vmin;
@@ -86,7 +86,7 @@
   height: 15vmin;
   width: 12vmin;
   border-radius: 1.5vmin;
-  border: 0.1vmin solid black;
+  border-left: 0.1vmin solid black;
   margin-left: 40.6vmin;
   border-right: 0.3vmin solid white;
 }
@@ -120,7 +120,11 @@
   color: aliceblue;
   background-color: rgba(36, 60, 141, 0.75);
 }
+.plus {
+  border-bottom: 0.1vmin solid aliceblue;
+}
 .minus {
+  border-top: 0.1vmin solid aliceblue;
   margin-top: 11vmin;
 }
 .plus::after {
