@@ -1,7 +1,7 @@
 .not-finished-notice {
   position: fixed;
   top: 0;
-  left: calc(50% - 27.25vmin);
+  left: calc(50% - 27.75vmin);
   background-color: rgba(0, 0, 0, 0.493);
   color: rgb(180, 185, 196);
   border: 0.3vmin solid aliceblue;
