@@ -1,7 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
-import {vmin} from "./vscale";
+import { vmin } from "./vscale";
 import { playSound, sounds as sound } from "./soundPlayer";
 import AuthorNotice from "./AuthorNotice.js";
+import addImageCursor from "../images/add.png";
+import removeImageCursor from "../images/remove.png";
 import ReactDOM from "react-dom";
 import "./soundList.css";
 
@@ -84,7 +86,7 @@ function SoundList({
           />
         ))}
       </ul>
-      <AuthorNotice/>
+      <AuthorNotice />
     </div>
   );
 }
@@ -107,7 +109,7 @@ function useFileInputHandler(soundIndex, soundEntries, setSoundEntries) {
         setFileException(true);
         setTimeout(() => setFileException(false), 2500);
       }
-    inputElement = null;
+      inputElement = null;
     });
     resolve(inputElement);
   });
