@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
+import {vmin} from "./vscale";
 import { playSound, sounds as sound } from "./soundPlayer";
+import AuthorNotice from "./AuthorNotice.js";
 import ReactDOM from "react-dom";
 import "./soundList.css";
 
@@ -31,23 +33,6 @@ function useWindowDimensionsListener(setWindowDimensions) {
     );
   }, [setWindowDimensions]);
 }
-
-/**
- *
- * @param {float} value 0<->1
- */
-function vmin(value) {
-  value = value < 0 ? 0 : value > 1 ? 1 : value;
-  return window.innerHeight <= window.innerWidth
-    ? window.innerHeight * value
-    : window.innerWidth * value;
-}
-// function vmax(value) {
-//   value = value < 0 ? 0 : value > 1 ? 1 : value;
-//   return window.innerHeight >= window.innerWidth
-//     ? window.innerHeight * value
-//     : window.innerWidth * value;
-// }
 function SoundList({
   selectedSoundEntryIndexArray,
   setSelectedSoundEntryIndexArray,
@@ -69,10 +54,10 @@ function SoundList({
     ).getBoundingClientRect();
     if (
       maxHeight !==
-      windowDimensions.height - soundListContainerRect.y - vmin(0.085)
+      windowDimensions.height - soundListContainerRect.y - vmin(8.5)
     ) {
       setMaxHeight(
-        windowDimensions.height - soundListContainerRect.y - vmin(0.085)
+        windowDimensions.height - soundListContainerRect.y - vmin(8.5)
       );
     }
   }, [ref, windowDimensions, maxHeight, setMaxHeight]);
@@ -99,6 +84,7 @@ function SoundList({
           />
         ))}
       </ul>
+      <AuthorNotice/>
     </div>
   );
 }

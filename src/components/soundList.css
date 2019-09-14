@@ -8,6 +8,7 @@
 
 .sound-list {
   margin: 3vmin auto;
+  margin-bottom: 0;
   padding: 0.5vmin 0;
   width: 85%;
   font-size: 2.5vmin;
