@@ -38,6 +38,7 @@ function SoundList({
   setSelectedSoundEntryIndexArray,
   setList,
   mute,
+  volume,
   children: list
 }) {
   const soundList = checkList(list, setList);
@@ -66,7 +67,7 @@ function SoundList({
       <ul
         className="sound-list"
         style={{ maxHeight }}
-        onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
+        onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
       >
         {soundList.map((sound, index, sounds) => (
           <SoundListEntry
@@ -77,7 +78,8 @@ function SoundList({
               setSelectedSoundEntryIndexArray,
               soundEntries: sounds,
               setSoundEntries: setList,
-              mute
+              mute,
+              volume
             }}
             soundImage={sound.image}
             soundName={sound.name.replace(".mp3", "")}
@@ -113,7 +115,13 @@ function useFileInputHandler(soundIndex, soundEntries, setSoundEntries) {
   });
   return { inputElementPromise, fileException };
 }
-function SoundImagePicker({ soundIndex, soundEntries, setSoundEntries, mute }) {
+function SoundImagePicker({
+  soundIndex,
+  soundEntries,
+  setSoundEntries,
+  mute,
+  volume
+}) {
   const { inputElementPromise, fileException } = useFileInputHandler(
     soundIndex,
     soundEntries,
@@ -121,14 +129,14 @@ function SoundImagePicker({ soundIndex, soundEntries, setSoundEntries, mute }) {
   );
   return (
     <div
-      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
-      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
+      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
       className={`image-picker${
         fileException ? " image-picker-exception" : ""
       }`}
       onClick={() =>
         !fileException &&
-        playSound(sound.confirm, mute) &&
+        playSound(sound.confirm, mute, volume) &&
         inputElementPromise.then(inputElement => inputElement.click())
       }
     >
@@ -142,16 +150,24 @@ function SoundListEntry({
   setSelectedSoundEntryIndexArray,
   soundEntries,
   setSoundEntries,
-  mute
+  mute,
+  volume
 }) {
+  const playSoundAndSetSelected = () => {
+    !selectedSoundEntryIndexArray.includes(index)
+      ? playSound(sound.select, mute, volume)
+      : playSound(sound.deselect, mute, volume);
+    selectedSoundEntryIndexArray.includes(index)
+      ? setSelectedSoundEntryIndexArray(
+          selectedSoundEntryIndexArray.filter(entry => entry !== index)
+        )
+      : setSelectedSoundEntryIndexArray(
+          selectedSoundEntryIndexArray.concat(index)
+        );
+  };
   return (
     <li
-      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
-      onClick={() =>
-        !selectedSoundEntryIndexArray.includes(index)
-          ? playSound(sound.select, mute)
-          : playSound(sound.deselect, mute)
-      }
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
       className={`sound-list-entry${
         selectedSoundEntryIndexArray.includes(index)
           ? " sound-list-entry-selected"
@@ -162,15 +178,7 @@ function SoundListEntry({
         <img
           src={soundEntries[index].image}
           alt=""
-          onClick={() =>
-            selectedSoundEntryIndexArray.includes(index)
-              ? setSelectedSoundEntryIndexArray(
-                  selectedSoundEntryIndexArray.filter(entry => entry !== index)
-                )
-              : setSelectedSoundEntryIndexArray(
-                  selectedSoundEntryIndexArray.concat(index)
-                )
-          }
+          onClick={() => playSoundAndSetSelected()}
         />
       ) : (
         <SoundImagePicker
@@ -178,21 +186,12 @@ function SoundListEntry({
             soundIndex: index,
             soundEntries,
             setSoundEntries,
-            mute
+            mute,
+            volume
           }}
         />
       )}
-      <p
-        onClick={() =>
-          selectedSoundEntryIndexArray.includes(index)
-            ? setSelectedSoundEntryIndexArray(
-                selectedSoundEntryIndexArray.filter(entry => entry !== index)
-              )
-            : setSelectedSoundEntryIndexArray(
-                selectedSoundEntryIndexArray.concat(index)
-              )
-        }
-      >
+      <p onClick={() => playSoundAndSetSelected()}>
         {soundEntries[index].name}
       </p>
     </li>

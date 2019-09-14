@@ -42,7 +42,7 @@
   background-color: rgba(180, 186, 210, 0.35);
   border: 0.3vmin solid black;
   border-left: 0.3vmin solid #00000000;
-  cursor: url(../images/add-selection.png), auto;
+  cursor: url(../images/default-cursor.png), auto;
 }
 
 .sound-list-entry p::-webkit-scrollbar {
@@ -64,8 +64,19 @@
   color: black;
 }
 .sound-list-entry-selected:hover {
-  cursor: url(../images/remove-selection.png), auto;
   background-color: rgb(180, 185, 196, 0.75);
+}
+.sound-list-entry img:hover {
+  cursor: url(../images/add-selection.png), auto;
+}
+.sound-list-entry-selected img:hover {
+  cursor: url(../images/remove-selection.png), auto;
+}
+.sound-list-entry p:hover {
+  cursor: url(../images/add-selection.png), auto;
+}
+.sound-list-entry-selected p:hover {
+  cursor: url(../images/remove-selection.png), auto;
 }
 .image-picker,
 .sound-list-entry img {
@@ -92,7 +103,7 @@
 }
 
 .image-picker:hover {
-  cursor: url(../images/add-image.png), auto;
+  cursor: url(../images/add-selection.png), auto;
   background-color: rgba(139, 147, 167, 0.75);
 }
 .image-picker-exception {
