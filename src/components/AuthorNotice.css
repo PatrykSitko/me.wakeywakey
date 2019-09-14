@@ -1,0 +1,11 @@
+.author-and-owner-notice {
+  font-size: 1.75vmin;
+  text-align: center;
+  margin: 0.464vmin 0;
+  color: aliceblue;
+}
+
+.copyright-notice {
+  font-size: 1.25vmin;
+  vertical-align: super;
+}
