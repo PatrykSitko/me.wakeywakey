@@ -12,7 +12,14 @@ function VolumeController({ volume, setVolume, className, ...props }) {
     marginTop: 0
   });
   useEffect(() => {
-    if (!mousedown) {
+    window.addEventListener("mouseup", () => setMousedown(false));
+    window.addEventListener(
+      "mousemove",
+      ({ pageX: x, pageY: y }) => mousedown && setMousemove({ x, y })
+    );
+  }, [mousedown, setMousedown, setMousemove]);
+  useEffect(() => {
+    if (!mousedown || !mousemove) {
       return;
     } else {
       const { y } = mousemove;
@@ -20,10 +27,10 @@ function VolumeController({ volume, setVolume, className, ...props }) {
         containerRef.current
       ).getBoundingClientRect();
       const nobsize = vmin(1.3);
-      if (y >= bottom - nobsize / 2 || y <= top + nobsize / 2) {
+      if (y >= bottom - nobsize || y <= top + nobsize / 2 - vmin(0.2)) {
         return;
       }
-      const newMarginTop = y - nobsize / 2 - top;
+      const newMarginTop = y - top - nobsize / 2;
       if (volumeControllerNobStyle.marginTop !== newMarginTop) {
         setVolumeControllerNobStyle({
           ...volumeControllerNobStyle,
@@ -43,12 +50,7 @@ function VolumeController({ volume, setVolume, className, ...props }) {
       key="volume-controller"
       ref={containerRef}
       className="volume-controller"
-      onMouseMove={({ pageX: x, pageY: y }) => setMousemove({ x, y })}
       onMouseDown={() => setMousedown(true)}
-      onMouseUp={() => {
-        setMousedown(false);
-      }}
-      onMouseLeave={() => setMousedown(false)}
     />,
     <div
       {...{
