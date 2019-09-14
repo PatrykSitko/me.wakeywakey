@@ -1,10 +1,18 @@
+.author-and-owner-notice a,
 .author-and-owner-notice {
   font-size: 1.75vmin;
   text-align: center;
   margin: 0.464vmin 0;
   color: aliceblue;
+  text-decoration: none;
+  transition: color 150ms;
 }
-
+.author-and-owner-notice a {
+  cursor: url(../images/twitter.png), auto;
+}
+.author-and-owner-notice a:hover {
+  color: rgba(12, 238, 208, 0.4);
+}
 .copyright-notice {
   font-size: 1.25vmin;
   vertical-align: super;

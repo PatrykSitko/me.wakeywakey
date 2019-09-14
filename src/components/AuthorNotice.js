@@ -5,14 +5,20 @@ function AuthorNotice() {
   return (
     <p className="author-and-owner-notice">
       Created by{" "}
-      <span
-        className="copyright-notice"
-        role="img"
-        aria-label="Copyright notice"
+      <a
+        href="https://twitter.com/PatrykSitkoJS"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        ©️
-      </span>
-      Patryk Sitko
+        <span
+          className="copyright-notice"
+          role="img"
+          aria-label="Copyright notice"
+        >
+          ©️
+        </span>
+        Patryk Sitko
+      </a>
     </p>
   );
 }
