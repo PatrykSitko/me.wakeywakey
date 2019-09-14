@@ -9,42 +9,16 @@ function VolumeController({ volume, setVolume, className, ...props }) {
   const containerRef = useRef();
   const nobRef = useRef();
   const [volumeControllerNobStyle, setVolumeControllerNobStyle] = useState({
-    marginTop: 0
+    marginTop: 0 - vmin(0.5)
   });
-  useEffect(() => {
-    window.addEventListener("mouseup", () => setMousedown(false));
-    window.addEventListener(
-      "mousemove",
-      ({ pageX: x, pageY: y }) => mousedown && setMousemove({ x, y })
-    );
-  }, [mousedown, setMousedown, setMousemove]);
-  useEffect(() => {
-    if (!mousedown || !mousemove) {
-      return;
-    } else {
-      const { y } = mousemove;
-      const { top, bottom } = ReactDOM.findDOMNode(
-        containerRef.current
-      ).getBoundingClientRect();
-      const nobsize = vmin(1.3);
-      if (y >= bottom - nobsize || y <= top + nobsize / 2 - vmin(0.2)) {
-        return;
-      }
-      const newMarginTop = y - top - nobsize / 2;
-      if (volumeControllerNobStyle.marginTop !== newMarginTop) {
-        setVolumeControllerNobStyle({
-          ...volumeControllerNobStyle,
-          marginTop: newMarginTop
-        });
-      }
-    }
-  }, [
+  useEventListeners(mousedown, setMousedown, setMousemove);
+  useSliderMovementHandler(
     containerRef,
     mousedown,
     mousemove,
     volumeControllerNobStyle,
     setVolumeControllerNobStyle
-  ]);
+  );
   return [
     <div
       key="volume-controller"
@@ -71,4 +45,48 @@ function VolumeController({ volume, setVolume, className, ...props }) {
   ];
 }
 
+function useEventListeners(mousedown, setMousedown, setMousemove) {
+  useEffect(() => {
+    window.addEventListener("mouseup", () => setMousedown(false));
+    window.addEventListener(
+      "mousemove",
+      ({ pageX: x, pageY: y }) => mousedown && setMousemove({ x, y })
+    );
+  }, [mousedown, setMousedown, setMousemove]);
+}
+function useSliderMovementHandler(
+  containerRef,
+  mousedown,
+  mousemove,
+  volumeControllerNobStyle,
+  setVolumeControllerNobStyle
+) {
+  useEffect(() => {
+    if (!mousedown || !mousemove) {
+      return;
+    } else {
+      const { y } = mousemove;
+      const { top, bottom } = ReactDOM.findDOMNode(
+        containerRef.current
+      ).getBoundingClientRect();
+      const nobsize = vmin(1.3);
+      if (y >= bottom - nobsize || y <= top + nobsize / 2 - vmin(0.5)) {
+        return;
+      }
+      const newMarginTop = y - top - nobsize / 2;
+      if (volumeControllerNobStyle.marginTop !== newMarginTop) {
+        setVolumeControllerNobStyle({
+          ...volumeControllerNobStyle,
+          marginTop: newMarginTop
+        });
+      }
+    }
+  }, [
+    containerRef,
+    mousedown,
+    mousemove,
+    volumeControllerNobStyle,
+    setVolumeControllerNobStyle
+  ]);
+}
 export default VolumeController;
