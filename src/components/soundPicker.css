@@ -20,6 +20,7 @@
 .sound-picker:hover {
   color: aliceblue;
   background-color: rgba(36, 60, 141, 0.75);
+  cursor: url(../images/add-music.png), auto;
 }
 
 .sound-picker-file-exception,

@@ -2,8 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import { vmin } from "./vscale";
 import { playSound, sounds as sound } from "./soundPlayer";
 import AuthorNotice from "./AuthorNotice.js";
-import addImageCursor from "../images/add.png";
-import removeImageCursor from "../images/remove.png";
 import ReactDOM from "react-dom";
 import "./soundList.css";
 

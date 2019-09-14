@@ -91,6 +91,7 @@
   border-right: 0.3vmin solid white;
 }
 .clock-buttons-mute {
+  cursor: url(../images/disallow-sound.png), auto;
   position: absolute;
   display: inline-block;
   width: 2.5vmin;
@@ -99,7 +100,9 @@
   border-bottom: 0.1vmin solid aliceblue;
   border-left: 0.1vmin solid aliceblue;
   border-bottom-left-radius: 1.3vmin;
-  cursor: pointer;
+}
+.clock-buttons-muted {
+  cursor: url(../images/allow-sound.png), auto;
 }
 .minus,
 .plus {
@@ -121,10 +124,12 @@
 }
 .plus {
   border-bottom: 0.1vmin solid aliceblue;
+  cursor: url(../images/add-selection.png), auto;
 }
 .minus {
   border-top: 0.1vmin solid aliceblue;
   margin-top: 11vmin;
+  cursor: url(../images/remove-selection.png), auto;
 }
 .plus::after {
   content: "+";

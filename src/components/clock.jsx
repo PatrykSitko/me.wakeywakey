@@ -199,7 +199,7 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
   const [minutesRight, setMinutesRight] = useState(
     parseInt(minutes.slice(1, 2))
   );
-  const [volume,setVolume]= useState(1);
+  const [volume, setVolume] = useState(1);
   useMinutesCalibrator(
     hoursLeft,
     hoursRight,
@@ -273,12 +273,14 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
         </Number>
       </div>
       <img
-        className="clock-buttons-mute"
+        className={`clock-buttons-mute${
+          buttonsMuted ? " clock-buttons-muted" : ""
+        }`}
         src={buttonsMuted ? speakerMutedImage : speakerImage}
         alt=""
         onClick={() => setButtonsMuted(!buttonsMuted)}
       />
-      <VolumeController {...{volume,setVolume}}/>
+      <VolumeController {...{ volume, setVolume }} />
     </div>
   );
 }
