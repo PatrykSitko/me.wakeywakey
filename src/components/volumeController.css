@@ -6,7 +6,6 @@
   width: 1vmin;
   height: 11.65vmin;
   background-color: #00000000;
-  padding: 0.3vmin 0;
   border-bottom-left-radius: 0.55vmin;
   border-left: 0.3vmin solid rgb(180, 185, 196);
   border-bottom: 0.3vmin solid rgb(180, 185, 196);
@@ -19,7 +18,6 @@
   width: inherit;
   height: 1.3vmin;
   margin-left: -0.2vmin;
-  margin-top: -0.3vmin;
   border-top: 0.35vmin solid rgb(34, 161, 184);
   border-bottom: 0.35vmin solid rgb(34, 161, 184);
   background-color: rgb(53, 81, 173);

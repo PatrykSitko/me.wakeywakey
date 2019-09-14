@@ -100,7 +100,6 @@
   border-left: 0.1vmin solid aliceblue;
   border-bottom-left-radius: 1.3vmin;
   cursor: pointer;
-  -webkit-user-drag: none;
 }
 .minus,
 .plus {

@@ -12,6 +12,8 @@ code {
     monospace;
 }
 
-*{
-  overflow:hidden;
+* {
+  overflow: hidden;
+  -webkit-user-drag: none;
+  user-select: none;
 }

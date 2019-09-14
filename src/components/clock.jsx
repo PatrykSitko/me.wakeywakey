@@ -199,6 +199,7 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
   const [minutesRight, setMinutesRight] = useState(
     parseInt(minutes.slice(1, 2))
   );
+  const [volume,setVolume]= useState(1);
   useMinutesCalibrator(
     hoursLeft,
     hoursRight,
@@ -277,7 +278,7 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
         alt=""
         onClick={() => setButtonsMuted(!buttonsMuted)}
       />
-      <VolumeController/>
+      <VolumeController {...{volume,setVolume}}/>
     </div>
   );
 }
