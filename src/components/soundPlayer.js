@@ -16,7 +16,7 @@ export function playSound(sound, mute, volume) {
     player.volume = soundVolume;
     player.play();
     player.addEventListener("ended", () => (player = null));
-    resolve(null);
+    resolve({ resolved: true });
   });
   return true;
 }
