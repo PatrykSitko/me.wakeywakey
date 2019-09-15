@@ -326,7 +326,7 @@ function Number({
         if (disabled) {
           return;
         }
-        playSound(sound.tick, mute);
+        playSound(sound.tick, mute, volume);
         const oldNumber = parseInt(number);
         setNumber(oldNumber >= 9 ? 0 : oldNumber + 1);
       }}
