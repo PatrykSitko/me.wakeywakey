@@ -24,7 +24,7 @@ function useFileInputHandler(setSelectedSong, setFileException) {
     resolve(inputElement);
   });
 }
-function SoundPicker({ setSelectedSong, mute }) {
+function SoundPicker({ setSelectedSong, mute, volume }) {
   const [fileException, setFileException] = useState(false);
   const inputElementPromise = useFileInputHandler(
     setSelectedSong,
@@ -35,11 +35,11 @@ function SoundPicker({ setSelectedSong, mute }) {
       className={`sound-picker${
         fileException ? " sound-picker-file-exception" : ""
       }`}
-      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
-      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
+      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
       onClick={() =>
         !fileException &&
-        playSound(sound.confirm, mute) &&
+        playSound(sound.confirm, mute, volume) &&
         inputElementPromise.then(inputElement => inputElement.click())
       }
     >

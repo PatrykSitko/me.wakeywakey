@@ -103,7 +103,7 @@
 }
 
 .image-picker:hover {
-  cursor: url(../images/add-selection.png), auto;
+  cursor: url(../images/add-image.png), auto;
   background-color: rgba(139, 147, 167, 0.75);
 }
 .image-picker-exception {

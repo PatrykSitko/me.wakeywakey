@@ -1,38 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { vmin } from "./vscale";
 import { playSound, sounds as sound } from "./soundPlayer";
-import AuthorNotice from "./AuthorNotice.js";
+import AuthorNotice from "./AuthorNotice";
 import ReactDOM from "react-dom";
 import "./soundList.css";
 
-function checkList(list, setList) {
-  if (typeof setList !== "function") {
-    throw new TypeError(
-      "Element::SoundList: is missing setList attribute, the setList attribute should be able to update the list that's passed as a child"
-    );
-  }
-  return typeof list !== "object"
-    ? setList([list]) || [list]
-    : Object.values(list);
-}
-function useWindowDimensionsListener(setWindowDimensions) {
-  const updateWindowDimensions = setWindowDimensions => {
-    setWindowDimensions({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-  };
-  useEffect(() => {
-    window.addEventListener(
-      "fullscreenchange",
-      updateWindowDimensions.bind(this, setWindowDimensions)
-    );
-    window.addEventListener(
-      "resize",
-      updateWindowDimensions.bind(this, setWindowDimensions)
-    );
-  }, [setWindowDimensions]);
-}
 function SoundList({
   selectedSoundEntryIndexArray,
   setSelectedSoundEntryIndexArray,
@@ -86,9 +58,38 @@ function SoundList({
           />
         ))}
       </ul>
-      <AuthorNotice />
+      <AuthorNotice {...{ volume, mute }} />
     </div>
   );
+}
+
+function checkList(list, setList) {
+  if (typeof setList !== "function") {
+    throw new TypeError(
+      "Element::SoundList: is missing setList attribute, the setList attribute should be able to update the list that's passed as a child"
+    );
+  }
+  return typeof list !== "object"
+    ? setList([list]) || [list]
+    : Object.values(list);
+}
+function useWindowDimensionsListener(setWindowDimensions) {
+  const updateWindowDimensions = setWindowDimensions => {
+    setWindowDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+  };
+  useEffect(() => {
+    window.addEventListener(
+      "fullscreenchange",
+      updateWindowDimensions.bind(this, setWindowDimensions)
+    );
+    window.addEventListener(
+      "resize",
+      updateWindowDimensions.bind(this, setWindowDimensions)
+    );
+  }, [setWindowDimensions]);
 }
 
 function useFileInputHandler(soundIndex, soundEntries, setSoundEntries) {

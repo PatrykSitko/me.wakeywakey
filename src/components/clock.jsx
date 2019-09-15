@@ -189,7 +189,15 @@ const minutes =
     ? date.getMinutes().toString()
     : "0".concat(date.getMinutes().toString());
 
-function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
+function Clock({
+  volume,
+  setVolume,
+  hideUI,
+  className,
+  buttonsMuted,
+  setButtonsMuted,
+  ...props
+}) {
   const [hoursLeft, setHoursLeft] = useState(parseInt(hours.slice(0, 1)));
   const [hoursLeftAction, setHoursLeftAction] = useState("none");
   const [hoursRight, setHoursRight] = useState(parseInt(hours.slice(1, 2)));
@@ -199,7 +207,6 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
   const [minutesRight, setMinutesRight] = useState(
     parseInt(minutes.slice(1, 2))
   );
-  const [volume, setVolume] = useState(1);
   useMinutesCalibrator(
     hoursLeft,
     hoursRight,
@@ -237,6 +244,7 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
           disabled={hideUI}
           mute={buttonsMuted}
           setNumber={setHoursLeft}
+          volume={volume}
         >
           {hoursLeft}
         </Number>
@@ -247,6 +255,7 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
           disabled={hideUI}
           mute={buttonsMuted}
           setNumber={setHoursRight}
+          volume={volume}
         >
           {hoursRight}
         </Number>
@@ -258,6 +267,7 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
           disabled={hideUI}
           mute={buttonsMuted}
           setNumber={setMinutesLeft}
+          volume={volume}
         >
           {minutesLeft}
         </Number>
@@ -268,6 +278,7 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
           disabled={hideUI}
           mute={buttonsMuted}
           setNumber={setMinutesRight}
+          volume={volume}
         >
           {minutesRight}
         </Number>
@@ -278,14 +289,23 @@ function Clock({ hideUI, className, buttonsMuted, setButtonsMuted, ...props }) {
         }`}
         src={buttonsMuted ? speakerMutedImage : speakerImage}
         alt=""
-        onClick={() => setButtonsMuted(!buttonsMuted)}
+        onClick={() =>
+          setButtonsMuted(!buttonsMuted ? !setVolume(buttonsMuted) : volume)
+        }
       />
       <VolumeController {...{ volume, setVolume }} />
     </div>
   );
 }
 
-function Number({ mute, setNumber, hideUI, disabled, children: number }) {
+function Number({
+  volume,
+  mute,
+  setNumber,
+  hideUI,
+  disabled,
+  children: number
+}) {
   if (number > 9) {
     setNumber(0);
     number = 0;
@@ -300,8 +320,8 @@ function Number({ mute, setNumber, hideUI, disabled, children: number }) {
       key="plus"
       {...{ style }}
       className="plus"
-      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
-      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
+      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
       onClick={() => {
         if (disabled) {
           return;
@@ -324,13 +344,13 @@ function Number({ mute, setNumber, hideUI, disabled, children: number }) {
       key="minus"
       {...{ style }}
       className="minus"
-      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute)}
-      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute)}
+      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
+      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
       onClick={() => {
         if (disabled) {
           return;
         }
-        playSound(sound.tick, mute);
+        playSound(sound.tick, mute, volume);
         const oldNumber = parseInt(number);
         setNumber(oldNumber <= 0 ? 9 : oldNumber - 1);
       }}

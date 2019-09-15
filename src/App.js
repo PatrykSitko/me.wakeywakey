@@ -16,6 +16,7 @@ function App() {
     selectedSoundEntryIndexArray,
     setSelectedSoundEntryIndexArray
   ] = useState([]);
+  const [volume, setVolume] = useState(1);
   useEffect(() => {
     if (soundToAdd) {
       setList([soundToAdd].concat(soundList));
@@ -28,15 +29,20 @@ function App() {
       <NotFinishedNotice />
       <Clock
         className="clock-position"
-        {...{ buttonsMuted, setButtonsMuted }}
+        {...{ buttonsMuted, setButtonsMuted, volume, setVolume }}
       />
-      <SoundPicker setSelectedSong={setSoundToAdd} mute={buttonsMuted} />
+      <SoundPicker
+        setSelectedSong={setSoundToAdd}
+        mute={buttonsMuted}
+        volume={volume}
+      />
       <SoundList
         {...{
           setList,
           selectedSoundEntryIndexArray,
           setSelectedSoundEntryIndexArray,
-          mute: buttonsMuted
+          mute: buttonsMuted,
+          volume
         }}
       >
         {soundList}

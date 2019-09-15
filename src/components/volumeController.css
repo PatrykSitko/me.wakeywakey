@@ -1,4 +1,3 @@
-.volume-controller,
 .volume-controller-container {
   position: absolute;
   margin-top: 2.79vmin;
@@ -10,11 +9,9 @@
   border-left: 0.3vmin solid rgb(180, 185, 196);
   border-bottom: 0.3vmin solid rgb(180, 185, 196);
 }
-.volume-controller {
-  z-index: 3;
-}
 
 .volume-controller-nob {
+  cursor: url(../images/volume-cursor.png), auto;
   width: inherit;
   height: 1.3vmin;
   margin-left: -0.2vmin;

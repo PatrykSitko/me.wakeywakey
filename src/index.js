@@ -38,9 +38,9 @@ window.onload = function() {
         disabledEvent(e);
       }
       // "F12" key
-      if (e.keyCode === 123) {
-        disabledEvent(e);
-      }
+      // if (e.keyCode === 123) {
+      //   disabledEvent(e);
+      // }
     },
     false
   );

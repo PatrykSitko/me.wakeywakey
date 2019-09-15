@@ -16,4 +16,5 @@
 .copyright-notice {
   font-size: 1.25vmin;
   vertical-align: super;
+  cursor: url(../images/twitter.png), auto;
 }

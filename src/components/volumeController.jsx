@@ -3,7 +3,14 @@ import { vmin } from "./vscale.js";
 import ReactDOM from "react-dom";
 import "./volumeController.css";
 
-function VolumeController({ volume, setVolume, className, ...props }) {
+function VolumeController({
+  muted,
+  setMuted,
+  volume,
+  setVolume,
+  className,
+  ...props
+}) {
   const [mousedown, setMousedown] = useState(undefined);
   const [mousemove, setMousemove] = useState(undefined);
   const containerRef = useRef();
@@ -19,21 +26,54 @@ function VolumeController({ volume, setVolume, className, ...props }) {
     volumeControllerNobStyle,
     setVolumeControllerNobStyle
   );
+  useEffect(() => {
+    const { top: nobTop, bottom: nobBottom } = ReactDOM.findDOMNode(
+      nobRef.current
+    ).getBoundingClientRect();
+    const { top: containerTop, bottom: containerBottom } = ReactDOM.findDOMNode(
+      containerRef.current
+    ).getBoundingClientRect();
+    const nobSize = nobBottom - nobTop;
+    const sectorRange = containerBottom - containerTop - nobSize / 2;
+    const oneSector = sectorRange * 0.01;
+    // const sector = containerBottom - nobBottom - nobSize / 2;
+    const sectors = (() => {
+      let sectors = [];
+      for (let counter = 0; counter < 100; counter++) {
+        const newSector = oneSector * counter;
+        sectors = sectors.concat(newSector);
+      }
+      return sectors.reverse();
+    })();
+    const currentSector = findSector(
+      sectors,
+      volumeControllerNobStyle.marginTop
+    );
+    let volume = `${currentSector / 100}`;
+    const dotIndex = volume.indexOf(".");
+    volume = volume.slice(0, dotIndex + 2);
+    volume = parseFloat(volume);
+    setVolume(volume > 1 ? 1 : volume < 0 ? 0 : volume);
+  }, [
+    nobRef,
+    containerRef,
+    volume,
+    setVolume,
+    mousedown,
+    mousemove,
+    volumeControllerNobStyle
+  ]);
   return [
     <div
-      key="volume-controller"
-      ref={containerRef}
-      className="volume-controller"
-      onMouseDown={() => setMousedown(true)}
-    />,
-    <div
       {...{
+        ref: containerRef,
         key: "volume-controller-container",
         className: `volume-controller-container${
           className ? " " + className : ""
         }`,
         ...props
       }}
+      onMouseDown={() => setMousedown(true)}
     >
       <div
         ref={nobRef}
@@ -43,6 +83,16 @@ function VolumeController({ volume, setVolume, className, ...props }) {
       <div className="volume-controller-volume-indicator" />
     </div>
   ];
+}
+function findSector(sectors, nobMarginTop) {
+  let volume = 0;
+  for (let sector of sectors) {
+    if (nobMarginTop >= sector) {
+      break;
+    }
+    volume += 1;
+  }
+  return volume;
 }
 
 function useEventListeners(mousedown, setMousedown, setMousemove) {
