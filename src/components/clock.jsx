@@ -196,6 +196,7 @@ function Clock({
   className,
   buttonsMuted,
   setButtonsMuted,
+  setWakeupTime,
   ...props
 }) {
   const [hoursLeft, setHoursLeft] = useState(parseInt(hours.slice(0, 1)));
@@ -233,6 +234,9 @@ function Clock({
     hoursLeftAction,
     setHoursLeftAction
   );
+  useEffect(() => {
+    setWakeupTime({ minutesLeft, minutesRight, hoursLeft, hoursRight });
+  }, [setWakeupTime, minutesLeft, minutesRight, hoursLeft, hoursRight]);
   return (
     <div
       {...props}
@@ -290,7 +294,14 @@ function Clock({
         src={buttonsMuted ? speakerMutedImage : speakerImage}
         alt=""
         onClick={() =>
-          setButtonsMuted(!buttonsMuted ? !setVolume(buttonsMuted) : volume)
+          setButtonsMuted(
+            buttonsMuted
+              ? (() => {
+                  // setVolume(buttonsMuted);
+                  return false;
+                })()
+              : volume
+          )
         }
       />
       <VolumeController {...{ volume, setVolume }} />
@@ -319,14 +330,24 @@ function Number({
     <div
       key="plus"
       {...{ style }}
-      className="plus"
-      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
-      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
+      className={`plus${hideUI ? " default-cursor" : ""}`}
+      onMouseEnter={playSound.bind(
+        this,
+        sound.mouseEnterLeave,
+        mute || hideUI,
+        volume
+      )}
+      onMouseLeave={playSound.bind(
+        this,
+        sound.mouseEnterLeave,
+        mute || hideUI,
+        volume
+      )}
       onClick={() => {
         if (disabled) {
           return;
         }
-        playSound(sound.tick, mute, volume);
+        playSound(sound.tick, mute || hideUI, volume);
         const oldNumber = parseInt(number);
         setNumber(oldNumber >= 9 ? 0 : oldNumber + 1);
       }}
@@ -343,14 +364,24 @@ function Number({
     <div
       key="minus"
       {...{ style }}
-      className="minus"
-      onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
-      onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
+      className={`minus${hideUI ? " default-cursor" : ""}`}
+      onMouseEnter={playSound.bind(
+        this,
+        sound.mouseEnterLeave,
+        mute || hideUI,
+        volume
+      )}
+      onMouseLeave={playSound.bind(
+        this,
+        sound.mouseEnterLeave,
+        mute || hideUI,
+        volume
+      )}
       onClick={() => {
         if (disabled) {
           return;
         }
-        playSound(sound.tick, mute, volume);
+        playSound(sound.tick, mute || hideUI, volume);
         const oldNumber = parseInt(number);
         setNumber(oldNumber <= 0 ? 9 : oldNumber - 1);
       }}

@@ -8,19 +8,21 @@
   border-bottom-left-radius: 0.55vmin;
   border-left: 0.3vmin solid rgb(180, 185, 196);
   border-bottom: 0.3vmin solid rgb(180, 185, 196);
+  cursor: url(../images/volume-cursor.png), auto;
 }
 
 .volume-controller-nob {
-  cursor: url(../images/volume-cursor.png), auto;
   width: inherit;
   height: 1.3vmin;
   margin-left: -0.2vmin;
   border-top: 0.35vmin solid rgb(34, 161, 184);
   border-bottom: 0.35vmin solid rgb(34, 161, 184);
   background-color: rgb(53, 81, 173);
+  cursor: url(../images/volume-cursor.png), auto;
 }
 .volume-controller-volume-indicator {
   width: inherit;
   height: 110%;
   background-color: rgba(12, 238, 208, 0.4);
+  cursor: url(../images/volume-cursor.png), auto;
 }

@@ -5,7 +5,8 @@ import Background from "./components/background";
 import SoundPicker from "./components/soundPicker";
 import SoundList from "./components/soundList";
 import defaultSoundList from "./components/defaultSounds";
-import NotFinishedNotice from "./components/notFinishedNotice";
+// import NotFinishedNotice from "./components/notFinishedNotice";
+import ArmAlarm from "./components/armAlarm";
 import nightVideo from "./videos/night-background.webm";
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
     setSelectedSoundEntryIndexArray
   ] = useState([]);
   const [volume, setVolume] = useState(1);
+  const [wakeupTime, setWakeupTime] = useState(undefined);
+  const [alarmArmed, setAlarmArmed] = useState(false);
   useEffect(() => {
     if (soundToAdd) {
       setList([soundToAdd].concat(soundList));
@@ -26,10 +29,27 @@ function App() {
   return (
     <div className="App">
       <Background night={nightVideo} />
-      <NotFinishedNotice />
+      <ArmAlarm
+        {...{
+          wakeupTime,
+          setWakeupTime,
+          soundList,
+          alarmArmed,
+          setAlarmArmed,
+          mute: buttonsMuted,
+          selectedSoundEntryIndexArray,
+          volume
+        }}
+      />
       <Clock
-        className="clock-position"
-        {...{ buttonsMuted, setButtonsMuted, volume, setVolume }}
+        {...{
+          buttonsMuted,
+          setButtonsMuted,
+          volume,
+          setVolume,
+          setWakeupTime,
+          hideUI: alarmArmed
+        }}
       />
       <SoundPicker
         setSelectedSong={setSoundToAdd}

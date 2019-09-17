@@ -1,0 +1,68 @@
+.arm-alarm-buttons-container {
+  width: 29vmin;
+  height: 4vmin;
+  margin: auto;
+  margin-top: 20vh;
+  display: flex;
+  font-size: 2.75vmin;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.arm-alarm-activate-button {
+  width: 7vmin;
+  background-color: rgba(0, 128, 0, 0.5);
+  border-top-left-radius: 0.9vmin;
+  border-top-right-radius: 0.9vmin;
+  align-self: flex-end;
+  height: calc(4vmin - 0.1vmin);
+  border: 0.1vmin solid white;
+  border-bottom: 0px solid white;
+  transition-property: height;
+  transition-duration: 0.3s;
+}
+.arm-alarm-activate-button:hover {
+  background-color: rgba(0, 128, 0, 0.75);
+  color: aliceblue;
+}
+
+.arm-alarm-snooze-button {
+  width: 15vmin;
+  margin: 0 0.3vmin;
+  background-color: rgba(172, 255, 47, 0.5);
+  border-top-left-radius: 0.9vmin;
+  border-top-right-radius: 0.9vmin;
+  align-self: flex-end;
+  height: calc(4vmin - 0.1vmin);
+  border: 0.1vmin solid white;
+  border-bottom: 0px solid white;
+  transition-property: height;
+  transition-duration: 0.3s;
+}
+
+.arm-alarm-snooze-button:hover {
+  background-color: rgba(172, 255, 47, 0.75);
+  color: aliceblue;
+}
+
+.arm-alarm-deactivate-button {
+  width: 7vmin;
+  border-top-left-radius: 0.9vmin;
+  border-top-right-radius: 0.9vmin;
+  background-color: rgba(255, 0, 0, 0.5);
+  align-self: flex-end;
+  height: calc(4vmin - 0.1vmin);
+  border: 0.1vmin solid white;
+  border-bottom: 0px solid white;
+  transition-property: height;
+  transition-duration: 0.3s;
+}
+
+.arm-alarm-deactivate-button:hover {
+  background-color: rgba(255, 0, 0, 0.75);
+  color: aliceblue;
+}
+
+.arm-alarm-button-activated {
+  height: 3.25vmin;
+}

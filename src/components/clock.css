@@ -20,6 +20,7 @@
   left: 6.3vmin;
 }
 .clock {
+  margin: auto;
   background-color: rgba(47, 46, 46, 0.65);
   border-radius: 3vmin;
   width: 54.5vmin;
@@ -38,11 +39,12 @@
   position: absolute;
   display: inline-block;
   margin-top: 2.5vmin;
-  margin-left: 1.35vmin;
+  margin-left: 1.1vmin;
   height: 15vmin;
   width: 12vmin;
   border-radius: 1.5vmin;
   border-left: 0.3vmin solid white;
+  border-right: 0.1vmin solid black;
 }
 .clock-hours-right {
   position: absolute;
@@ -51,7 +53,6 @@
   height: 15vmin;
   width: 12vmin;
   border-radius: 1.5vmin;
-  border-left: 0.1vmin solid black;
   border-right: 0.1vmin solid black;
   margin-left: 13.5vmin;
 }
@@ -136,4 +137,8 @@
 }
 .minus::after {
   content: "-";
+}
+
+.default-cursor {
+  cursor: url(../images/default-cursor.png), auto;
 }

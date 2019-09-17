@@ -47,7 +47,8 @@ function VolumeController({
     })();
     const currentSector = findSector(
       sectors,
-      volumeControllerNobStyle.marginTop
+      volumeControllerNobStyle.marginTop,
+      nobSize
     );
     let volume = `${currentSector / 100}`;
     const dotIndex = volume.indexOf(".");
@@ -84,10 +85,10 @@ function VolumeController({
     </div>
   ];
 }
-function findSector(sectors, nobMarginTop) {
+function findSector(sectors, nobMarginTop, nobSize) {
   let volume = 0;
   for (let sector of sectors) {
-    if (nobMarginTop >= sector) {
+    if (nobMarginTop + nobSize / 2 >= sector) {
       break;
     }
     volume += 1;

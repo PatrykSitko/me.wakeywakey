@@ -73,6 +73,7 @@ function checkList(list, setList) {
     ? setList([list]) || [list]
     : Object.values(list);
 }
+
 function useWindowDimensionsListener(setWindowDimensions) {
   const updateWindowDimensions = setWindowDimensions => {
     setWindowDimensions({
