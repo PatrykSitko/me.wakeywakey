@@ -40,6 +40,7 @@
 }
 
 .arm-alarm-snooze-button:hover {
+  cursor: url(../images/snooze-cursor.png), auto;
   background-color: rgba(172, 255, 47, 0.75);
   color: aliceblue;
 }
