@@ -19,6 +19,7 @@ function App() {
   ] = useState([]);
   const [volume, setVolume] = useState(1);
   const [wakeupTime, setWakeupTime] = useState(undefined);
+  const [wakeupTimeExternal, setWakeupTimeExternal] = useState(undefined);
   const [alarmArmed, setAlarmArmed] = useState(false);
   useEffect(() => {
     if (soundToAdd) {
@@ -38,12 +39,12 @@ function App() {
           alarmArmed,
           setAlarmArmed,
           mute: buttonsMuted,
-          selectedSoundEntryIndexArray,
+          selectedSoundEntryIndexArray, setWakeupTimeExternal,
           volume
         }}
       />
       <Clock
-        {...{
+        {...{wakeupTimeExternal, setWakeupTimeExternal,
           buttonsMuted,
           setButtonsMuted,
           volume,

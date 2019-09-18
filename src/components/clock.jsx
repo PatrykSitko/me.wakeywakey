@@ -196,7 +196,7 @@ function Clock({
   className,
   buttonsMuted,
   setButtonsMuted,
-  setWakeupTime,
+  setWakeupTime,wakeupTimeExternal, setWakeupTimeExternal,
   ...props
 }) {
   const [hoursLeft, setHoursLeft] = useState(parseInt(hours.slice(0, 1)));
@@ -237,6 +237,17 @@ function Clock({
   useEffect(() => {
     setWakeupTime({ minutesLeft, minutesRight, hoursLeft, hoursRight });
   }, [setWakeupTime, minutesLeft, minutesRight, hoursLeft, hoursRight]);
+  useEffect(()=>{
+    if(wakeupTimeExternal){
+    setHoursLeft(parseInt(wakeupTimeExternal.hoursLeft));
+    setHoursRight(parseInt(wakeupTimeExternal.hoursRight));
+    setMinutesLeft(parseInt(wakeupTimeExternal.minutesLeft));
+    setMinutesRight(parseInt(wakeupTimeExternal.minutesRight));
+  setWakeupTimeExternal(undefined);}},[wakeupTimeExternal, setWakeupTimeExternal,
+      setHoursRight,
+      setHoursLeft,
+      setMinutesRight,
+      setMinutesLeft]);
   return (
     <div
       {...props}

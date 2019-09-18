@@ -9,12 +9,13 @@ function ArmAlarm({
   setAlarmArmed,
   wakeupTime = { minutesLeft: 0, minutesRight: 0, hoursLeft: 0, hoursRight: 0 },
   selectedSoundEntryIndexArray,
-  setWakeupTime,
+  setWakeupTimeExternal,
   soundList,
   volume,
   mute
 }) {
   const [trackedTimeout, setTrackedTimeout] = useState(false);
+  const [trackedInterval, setTrackedInterval] = useState(false);
   const [allowedToPlaySongs, setAllowedToPlaySongs] = useState(false);
   const [playedSongsEntryIndexArray, setPlayedSongsEntryIndexArray] = useState(
     []
@@ -41,12 +42,23 @@ function ArmAlarm({
       setPlayerIsPlaying(false);
       setSnooze(false);
       setAllowedToPlaySongs(false);
-      const snoozeTimeout = setTimeout(() => {
-        if (alarmArmed) {
-          setAllowedToPlaySongs(true);
-        }
-        clearTimeout(snoozeTimeout);
-      }, 250000);
+      setTrackedTimeout(clearTimeout(trackedTimeout));
+      const newDate = new Date();
+      newDate.setMinutes(new Date().getMinutes() + 5);
+      const newHours =
+        newDate.getHours().toString().length > 1
+          ? newDate.getHours().toString()
+          : "0".concat(newDate.getHours().toString());
+      const newMinutes =
+        newDate.getMinutes().toString().length > 1
+          ? newDate.getMinutes().toString()
+          : "0".concat(newDate.getMinutes().toString());
+      setWakeupTimeExternal({
+        hoursLeft: newHours.slice(0, 1),
+        hoursRight: newHours.slice(1, 2),
+        minutesLeft: newMinutes.slice(0, 1),
+        minutesRight: newMinutes.slice(1, 2)
+      });
     } else if (allowedToPlaySongs) {
       playSongs(
         player,
@@ -67,7 +79,7 @@ function ArmAlarm({
     alarmArmed,
     soundList,
     wakeupTime,
-    setWakeupTime,
+    setWakeupTimeExternal,
     trackedTimeout,
     setTrackedTimeout,
     player,
@@ -80,12 +92,53 @@ function ArmAlarm({
     allowedToPlaySongs,
     setAllowedToPlaySongs
   ]);
+  useEffect(() => {
+    if (!trackedInterval) {
+      setTrackedInterval(
+        setInterval(() => {
+          if (!alarmArmed || !allowedToPlaySongs) {
+            return;
+          }
+          const newDate = new Date();
+          const newHours =
+            newDate.getHours().toString().length > 1
+              ? newDate.getHours().toString()
+              : "0".concat(newDate.getHours().toString());
+          const newMinutes =
+            newDate.getMinutes().toString().length > 1
+              ? newDate.getMinutes().toString()
+              : "0".concat(newDate.getMinutes().toString());
+          if (
+            parseInt(newHours) !== hours ||
+            parseInt(newMinutes) !== minutes
+          ) {
+            setWakeupTimeExternal({
+              hoursLeft: newHours.slice(0, 1),
+              hoursRight: newHours.slice(1, 2),
+              minutesLeft: newMinutes.slice(0, 1),
+              minutesRight: newMinutes.slice(1, 2)
+            });
+          }
+        }, 100)
+      );
+    }
+    return ()=>{
+      setTrackedInterval(clearInterval(trackedInterval));
+    }
+  }, [
+    trackedInterval,
+    setTrackedInterval,
+    setWakeupTimeExternal,
+    alarmArmed,
+    hours,
+    minutes,allowedToPlaySongs
+  ]);
   return (
     <div className="arm-alarm-buttons-container">
       <div
         onClick={() =>
           !alarmArmed &&
-          playSound(sound.select, mute, volume) &&
+          playSound(sound.confirm, mute, volume) &&
           setAlarmArmed(!alarmArmed)
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
@@ -101,7 +154,7 @@ function ArmAlarm({
           alarmArmed &&
           allowedToPlaySongs &&
           !snooze &&
-          playSound(sound.select, mute, volume) &&
+          playSound(sound.confirm, mute, volume) &&
           setSnooze(!snooze)
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
@@ -119,7 +172,7 @@ function ArmAlarm({
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onClick={() =>
           (alarmArmed &&
-            playSound(sound.select, mute, volume) &&
+            playSound(sound.confirm, mute, volume) &&
             setAllowedToPlaySongs(false)) ||
           setSnooze(false) ||
           setAlarmArmed(!alarmArmed)
