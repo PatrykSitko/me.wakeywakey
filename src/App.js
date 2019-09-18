@@ -7,6 +7,7 @@ import SoundList from "./components/soundList";
 import defaultSoundList from "./components/defaultSounds";
 import NotFinishedNotice from "./components/notFinishedNotice";
 import ArmAlarm from "./components/armAlarm";
+import WakeyWakeyLogo from "./components/wakeyWakeyLogo";
 import nightVideo from "./videos/night-background.webm";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
     <div className="App">
       <Background night={nightVideo} />
       <NotFinishedNotice />
+      <WakeyWakeyLogo />
       <ArmAlarm
         {...{
           wakeupTime,
@@ -39,12 +41,15 @@ function App() {
           alarmArmed,
           setAlarmArmed,
           mute: buttonsMuted,
-          selectedSoundEntryIndexArray, setWakeupTimeExternal,
+          selectedSoundEntryIndexArray,
+          setWakeupTimeExternal,
           volume
         }}
       />
       <Clock
-        {...{wakeupTimeExternal, setWakeupTimeExternal,
+        {...{
+          wakeupTimeExternal,
+          setWakeupTimeExternal,
           buttonsMuted,
           setButtonsMuted,
           volume,
