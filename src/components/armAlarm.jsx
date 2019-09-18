@@ -42,7 +42,12 @@ function ArmAlarm({
       setPlayerIsPlaying(false);
       setSnooze(false);
       setAllowedToPlaySongs(false);
-      setTrackedTimeout(clearTimeout(trackedTimeout));
+      const snoozeTimeout = setTimeout(() => {
+        if (alarmArmed) {
+          setAllowedToPlaySongs(true);
+        }
+        clearTimeout(snoozeTimeout);
+      }, 300000 - new Date().getSeconds() * 1000);
       const newDate = new Date();
       newDate.setMinutes(new Date().getMinutes() + 5);
       const newHours =
@@ -109,8 +114,8 @@ function ArmAlarm({
               ? newDate.getMinutes().toString()
               : "0".concat(newDate.getMinutes().toString());
           if (
-            parseInt(newHours) !== hours ||
-            parseInt(newMinutes) !== minutes
+            newDate.getHours() !== hours ||
+            newDate.getMinutes() !== minutes
           ) {
             setWakeupTimeExternal({
               hoursLeft: newHours.slice(0, 1),
