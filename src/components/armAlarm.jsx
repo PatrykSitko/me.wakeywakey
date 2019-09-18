@@ -124,19 +124,20 @@ function ArmAlarm({
               minutesRight: newMinutes.slice(1, 2)
             });
           }
-        }, 100)
+        }, 1)
       );
     }
-    return ()=>{
+    return () => {
       setTrackedInterval(clearInterval(trackedInterval));
-    }
+    };
   }, [
     trackedInterval,
     setTrackedInterval,
     setWakeupTimeExternal,
     alarmArmed,
     hours,
-    minutes,allowedToPlaySongs
+    minutes,
+    allowedToPlaySongs
   ]);
   return (
     <div className="arm-alarm-buttons-container">
