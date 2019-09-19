@@ -9,22 +9,21 @@ function VolumeController({
   volume,
   setVolume,
   className,
+  marginTop,
+  setMarginTop,
   ...props
 }) {
   const [mousedown, setMousedown] = useState(undefined);
   const [mousemove, setMousemove] = useState(undefined);
   const containerRef = useRef();
   const nobRef = useRef();
-  const [volumeControllerNobStyle, setVolumeControllerNobStyle] = useState({
-    marginTop: 0 - vmin(0.5)
-  });
   useEventListeners(mousedown, setMousedown, setMousemove);
   useSliderMovementHandler(
     containerRef,
     mousedown,
     mousemove,
-    volumeControllerNobStyle,
-    setVolumeControllerNobStyle
+    marginTop,
+    setMarginTop
   );
   useEffect(() => {
     const { top: nobTop, bottom: nobBottom } = ReactDOM.findDOMNode(
@@ -45,11 +44,7 @@ function VolumeController({
       }
       return sectors.reverse();
     })();
-    const currentSector = findSector(
-      sectors,
-      volumeControllerNobStyle.marginTop,
-      nobSize
-    );
+    const currentSector = findSector(sectors, marginTop, nobSize);
     let volume = `${currentSector / 100}`;
     const dotIndex = volume.indexOf(".");
     volume = volume.slice(0, dotIndex + 2);
@@ -62,7 +57,7 @@ function VolumeController({
     setVolume,
     mousedown,
     mousemove,
-    volumeControllerNobStyle
+    marginTop
   ]);
   return [
     <div
@@ -79,7 +74,7 @@ function VolumeController({
       <div
         ref={nobRef}
         className="volume-controller-nob"
-        style={volumeControllerNobStyle}
+        style={{ marginTop }}
       />
       <div className="volume-controller-volume-indicator" />
     </div>
@@ -109,8 +104,8 @@ function useSliderMovementHandler(
   containerRef,
   mousedown,
   mousemove,
-  volumeControllerNobStyle,
-  setVolumeControllerNobStyle
+  marginTop,
+  setMarginTop
 ) {
   useEffect(() => {
     if (!mousedown || !mousemove) {
@@ -125,19 +120,11 @@ function useSliderMovementHandler(
         return;
       }
       const newMarginTop = y - top - nobsize / 2;
-      if (volumeControllerNobStyle.marginTop !== newMarginTop) {
-        setVolumeControllerNobStyle({
-          ...volumeControllerNobStyle,
-          marginTop: newMarginTop
-        });
+      if (marginTop !== newMarginTop) {
+        console.log(setMarginTop);
+        setMarginTop(newMarginTop);
       }
     }
-  }, [
-    containerRef,
-    mousedown,
-    mousemove,
-    volumeControllerNobStyle,
-    setVolumeControllerNobStyle
-  ]);
+  }, [containerRef, mousedown, mousemove, marginTop, setMarginTop]);
 }
 export default VolumeController;
