@@ -24,10 +24,20 @@ function App() {
   const [alarmArmed, setAlarmArmed] = useState(false);
   useEffect(() => {
     if (soundToAdd) {
+      setSelectedSoundEntryIndexArray(
+        selectedSoundEntryIndexArray.map(entryIndex => entryIndex + 1)
+      );
       setList([soundToAdd].concat(soundList));
       setSoundToAdd(null);
     }
-  }, [soundToAdd, setSoundToAdd, soundList, setList]);
+  }, [
+    soundToAdd,
+    setSoundToAdd,
+    soundList,
+    setList,
+    selectedSoundEntryIndexArray,
+    setSelectedSoundEntryIndexArray
+  ]);
   return (
     <div className="App">
       <Background night={nightVideo} />
@@ -62,6 +72,10 @@ function App() {
         setSelectedSong={setSoundToAdd}
         mute={buttonsMuted}
         volume={volume}
+        {...{
+          selectedSoundEntryIndexArray,
+          setSelectedSoundEntryIndexArray
+        }}
       />
       <SoundList
         {...{
