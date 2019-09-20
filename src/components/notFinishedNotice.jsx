@@ -9,8 +9,8 @@ function NotFinishedNotice() {
       small (by design) to store all of your data. Please forgive me for this
       inconvenience, I'm working on a fix.
       <br />
-      Thx for your patience, and feel free to enjoy all of the currenly
-      implemented functionality,
+      Thx for your patience, and feel free to enjoy all of the implemented
+      functionality,
       <br /> have a wakey time 😉
     </div>
   );
