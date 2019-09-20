@@ -177,11 +177,11 @@ function ArmAlarm({
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onClick={() =>
-          (alarmArmed &&
-            playSound(sound.confirm, mute, volume) &&
-            setAllowedToPlaySongs(false)) ||
-          setSnooze(false) ||
-          setAlarmArmed(!alarmArmed)
+          alarmArmed &&
+          playSound(sound.confirm, mute, volume) &&
+          (setAllowedToPlaySongs(false) ||
+            setSnooze(false) ||
+            setAlarmArmed(!alarmArmed))
         }
         className={`arm-alarm-deactivate-button${
           !alarmArmed ? buttonActivatedClass : ""
