@@ -13,8 +13,7 @@
   left: 3.3vmin;
   position: absolute;
   z-index: 1;
-  /* previous color: rgb(51, 134, 51);*/
-  color: rgb(44, 114, 44);
+  color: rgb(51, 134, 51);
   user-select: none;
 }
 .number-one {

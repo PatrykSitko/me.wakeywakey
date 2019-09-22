@@ -1,4 +1,6 @@
-.not-finished-notice {
+.not-finished-notice,
+.not-finished-notice-colapsed {
+  position: fixed;
   top: 0;
   left: calc(50% - 27.75vmin);
   background-color: rgba(0, 0, 0, 0.493);
@@ -9,8 +11,33 @@
   border-bottom-left-radius: 3vmin;
   border-bottom-right-radius: 3vmin;
   text-align: center;
-  padding: 1vmin 0.5vmin 1.5vmin 0.5vmin;
+  padding: 0vmin 0.5vmin 1.5vmin 0.5vmin;
   overflow: hidden;
   margin: auto;
   margin-bottom: 1vmin;
+  z-index: 10;
+}
+.not-finished-notice-colapsed {
+  height: 3vmin;
+}
+.not-finished-notice-colapsable-button {
+  margin: 0;
+  min-height: 5.5vmin;
+  font-size: 3vmin;
+  background-color: #7f7f7f95;
+  margin-left: -0.5vmin;
+  padding-left: 1vmin;
+  margin-right: -0.5vmin;
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+}
+
+.not-finished-notice-colapsable-button:hover,
+.not-finished-notice-colapsable-button-colapsed:hover {
+  color: green;
+  background-color: #7f7f7ff5;
+}
+
+.not-finished-notice-colapsable-button-colapsed {
+  min-height: 4.5vmin;
 }
