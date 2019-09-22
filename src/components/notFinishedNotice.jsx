@@ -28,7 +28,13 @@ function NotFinishedNotice() {
       {!isColapsed ? (
         <ColapsableButton
           {...{
-            onMouseEnter: () => setCoreWordColor({ color: "red" }),
+            onMouseEnter: () => {
+              setCoreWordColor({ color: "red" });
+              const timeout = setTimeout(() => {
+                setCoreWordColor({ color: undefined });
+                clearTimeout(timeout);
+              }, 500);
+            },
             onMouseLeave: () => setCoreWordColor({ color: undefined }),
             colapsedState: isColapsed,
             getColapsedState: setIsColapsed

@@ -16,9 +16,14 @@
   margin: auto;
   margin-bottom: 1vmin;
   z-index: 10;
+  transition-property: height;
+  transition-duration: 0.3s;
+  height: 28vmin;
 }
 .not-finished-notice-colapsed {
   height: 3vmin;
+  transition-property: height;
+  transition-duration: 0.3s;
 }
 .not-finished-notice-colapsable-button {
   margin: 0;
