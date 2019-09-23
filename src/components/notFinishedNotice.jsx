@@ -33,7 +33,7 @@ function NotFinishedNotice() {
               const timeout = setTimeout(() => {
                 setCoreWordColor({ color: undefined });
                 clearTimeout(timeout);
-              }, 500);
+              }, 250);
             },
             onMouseLeave: () => setCoreWordColor({ color: undefined }),
             colapsedState: isColapsed,
