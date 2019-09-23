@@ -69,7 +69,7 @@ function VolumeController({
         }`,
         ...props
       }}
-      onMouseDown={() => setMousedown(true)}
+      onMouseDown={({ pageX: x, pageY: y }) => setMousedown({ x, y })}
     >
       <div
         ref={nobRef}
@@ -93,7 +93,10 @@ function findSector(sectors, nobMarginTop, nobSize) {
 
 function useEventListeners(mousedown, setMousedown, setMousemove) {
   useEffect(() => {
-    window.addEventListener("mouseup", () => setMousedown(false));
+    window.addEventListener(
+      "mouseup",
+      () => setMousedown(false) || setMousemove(false)
+    );
     window.addEventListener(
       "mousemove",
       ({ pageX: x, pageY: y }) => mousedown && setMousemove({ x, y })
@@ -108,10 +111,10 @@ function useSliderMovementHandler(
   setMarginTop
 ) {
   useEffect(() => {
-    if (!mousedown || !mousemove) {
+    if (!mousedown) {
       return;
     } else {
-      const { y } = mousemove;
+      const { y } = mousemove || mousedown;
       const { top, bottom } = ReactDOM.findDOMNode(
         containerRef.current
       ).getBoundingClientRect();
