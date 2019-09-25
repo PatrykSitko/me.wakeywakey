@@ -3,7 +3,7 @@ import confirm from "../sounds/buttons/confirm.mp3";
 import select from "../sounds/buttons/select.mp3";
 import deselect from "../sounds/buttons/deselect.mp3";
 import mouseEnterLeave from "../sounds/buttons/mouse-enter-leave.mp3";
-import twitter from "../sounds/buttons/twitter-sound-effect.mp3";
+import facebook from "../sounds/buttons/facebook-sound-effect.mp3";
 
 export const sounds = {
   tick,
@@ -11,7 +11,7 @@ export const sounds = {
   confirm,
   select,
   deselect,
-  twitter
+  facebook
 };
 export function playSound(sound, mute, volume) {
   const soundVolume = typeof volume === "number" ? volume : 0.3;

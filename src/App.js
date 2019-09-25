@@ -8,31 +8,28 @@ import defaultSoundList from "./components/defaultSounds";
 import NotFinishedNotice from "./components/notFinishedNotice";
 import ArmAlarm from "./components/armAlarm";
 import WakeyWakeyLogo from "./components/wakeyWakeyLogo";
-import nightVideo from "./videos/night-background.webm";
+import nightVideo from "./videos/universe.webm";
 import { vmin } from "./components/vscale.js";
 
-function App() {
+function determineInitialValue(storedName, returnIfNull) {
   const { localStorage: local } = window;
+  return local.getItem(storedName) !== null
+    ? JSON.parse(local.getItem(storedName))[storedName]
+    : returnIfNull;
+}
+function App() {
   const [soundList, setList] = useState(defaultSoundList);
   const [soundToAdd, setSoundToAdd] = useState(null);
   const [buttonsMuted, setButtonsMuted] = useState(
-    local.getItem("buttonsMuted") !== null
-      ? JSON.parse(local.getItem("buttonsMuted")).buttonsMuted
-      : false
+    determineInitialValue("buttonsMuted", false)
   );
   const [
     selectedSoundEntryIndexArray,
     setSelectedSoundEntryIndexArray
   ] = useState([]);
-  const [volume, setVolume] = useState(
-    local.getItem("volume") !== null
-      ? JSON.parse(local.getItem("volume")).volume
-      : 1
-  );
+  const [volume, setVolume] = useState(determineInitialValue("volume", 1));
   const [volumeSliderMarginTop, setVolumeSliderMarginTop] = useState(
-    local.getItem("volumeSliderMarginTop") !== null
-      ? JSON.parse(local.getItem("volumeSliderMarginTop")).volumeSliderMarginTop
-      : 0 - vmin(0.5)
+    determineInitialValue("volumeSliderMarginTop", 0 - vmin(0.5))
   );
   const [wakeupTime, setWakeupTime] = useState(undefined);
   const [wakeupTimeExternal, setWakeupTimeExternal] = useState(undefined);
@@ -97,7 +94,19 @@ function App() {
         );
       }
     }
-  }, [buttonsMuted, soundList, volume, volumeSliderMarginTop]);
+    // const storedWakeupTime = window.localStorage.getItem("wakeupTime");
+    // if (storedWakeupTime === null) {
+    //   window.localStorage.setItem("wakeupTime", JSON.stringify({ wakeupTime }));
+    // } else {
+    //   const parsedWakeupTime = JSON.parse(storedWakeupTime).wakeupTime;
+    //   if (parsedWakeupTime !== wakeupTime) {
+    //     window.localStorage.setItem(
+    //       "wakeupTime",
+    //       JSON.stringify({ wakeupTime })
+    //     );
+    //   }
+    // }
+  }, [buttonsMuted, soundList, volume, volumeSliderMarginTop /*, wakeupTime*/]);
   return (
     <div className="App">
       <Background night={nightVideo} />

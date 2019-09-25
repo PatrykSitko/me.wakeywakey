@@ -22,7 +22,7 @@ function AuthorNotice({ mute, volume }) {
         }}
       >
         <a
-          href="https://twitter.com/PatrykSitkoJS"
+          href="https://facebook.com/PatrykSitkoJS"
           target="_blank"
           rel="noopener noreferrer"
         >
