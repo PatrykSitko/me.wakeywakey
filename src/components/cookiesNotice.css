@@ -1,0 +1,62 @@
+.cookies-notice-container {
+  opacity: 0;
+  position: fixed;
+  background-color: rgba(47, 46, 46, 0.65);
+  border-radius: 3vmin;
+  width: 59vmin;
+  height: 34vmin;
+  border: 0.3vmin solid rgb(180, 185, 196);
+  border-bottom-left-radius: 33%;
+  border-bottom-right-radius: 33%;
+  top: 22vmin;
+  left: calc(50% - 29.5vmin);
+  display: inline-block;
+  z-index: 5;
+  transition: opacity 0.9s;
+}
+.cookies-notice-container-visible {
+  opacity: 1;
+}
+.cookies-notice {
+  margin: 1.8vmin;
+  margin-top: 1.7vmin;
+  text-align: center;
+  margin-bottom: 0;
+  padding: 0.8vmin;
+  font-size: 2.2vmin;
+  color: aliceblue;
+  background-color: rgba(180, 185, 196, 0.55);
+  border: 0.3vmin solid rgb(180, 185, 196, 0.5);
+  border-radius: 3vmin;
+  border-top-right-radius: 1.3vmin;
+}
+
+.cookies-notice-decline-button,
+.cookies-notice-accept-button {
+  font-size: 4vmin;
+  padding-bottom:0.45vmin;
+  text-align: center;
+  background-color: #7f7f7f95;
+  color: rgb(180, 185, 196);
+  float: left;
+  width: 40%;
+  margin-left: 9.7%;
+  border: 0.07vmin solid aliceblue;
+  border-bottom-left-radius: 69%;
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+}
+
+.cookies-notice-decline-button {
+  float: right;
+  margin-left: 0;
+  margin-right: 9.7%;
+  border-bottom-left-radius: 0vmin;
+  border-bottom-right-radius: 69%;
+}
+
+.cookies-notice-decline-button:hover,
+.cookies-notice-accept-button:hover {
+  color: green;
+  background-color: #7f7f7ff5;
+}

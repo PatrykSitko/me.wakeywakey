@@ -5,8 +5,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 window.onload = function() {
-  if (window.location.pathname !== "/") {
-    window.history.pushState(null, "Wakey Wakey", "/");
+  if (window.location.pathname !== "/#self-consciousness") {
+    window.history.pushState(
+      "#self-consciousness",
+      "Wakey Wakey",
+      "/#self-consciousness"
+    );
   }
   document.addEventListener(
     "contextmenu",
