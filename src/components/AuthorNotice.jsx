@@ -13,7 +13,7 @@ function AuthorNotice({ mute, volume }) {
           !clicked && playSound(sound.mouseEnterLeave, mute, volume)
         }
         onClick={() => {
-          playSound(sound.twitter, mute, volume);
+          playSound(sound.facebook, mute, volume);
           setClicked(true);
           const timeout = setTimeout(
             () => clearTimeout(timeout) || setClicked(false),
