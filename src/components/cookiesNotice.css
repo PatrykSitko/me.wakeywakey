@@ -18,13 +18,17 @@
   opacity: 1;
 }
 .cookies-notice {
+  background-repeat: no-repeat;
+  background-image: url(../images/cookies.svg);
+  background-size: contain;
   margin: 1.8vmin;
   margin-top: 1.7vmin;
   text-align: center;
   margin-bottom: 0;
   padding: 0.8vmin;
   font-size: 2.2vmin;
-  color: aliceblue;
+  color: rgb(251, 255, 240);
+  text-shadow: 0.1vmin 0.3vmin #3f3f3f;
   background-color: rgba(180, 185, 196, 0.55);
   border: 0.3vmin solid rgb(180, 185, 196, 0.5);
   border-radius: 3vmin;
@@ -34,7 +38,7 @@
 .cookies-notice-decline-button,
 .cookies-notice-accept-button {
   font-size: 4vmin;
-  padding-bottom:0.45vmin;
+  padding-bottom: 0.45vmin;
   text-align: center;
   background-color: #7f7f7f95;
   color: rgb(180, 185, 196);
