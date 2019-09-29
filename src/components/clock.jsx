@@ -443,6 +443,26 @@ function Number({
     timeout,
     settimeout
   );
+  // copied from vasi (https://stackoverflow.com/users/7702397/vasi  -  https://stackoverflow.com/questions/31223341/detecting-scroll-direction)
+  function findScrollDirectionOtherBrowsers(event) {
+    var delta;
+
+    if (event.wheelDelta) {
+      delta = event.wheelDelta;
+    } else {
+      delta = -1 * event.deltaY;
+    }
+
+    if (delta < 0) {
+      playSound(sound.tick, mute || hideUI, volume);
+      const oldNumber = parseInt(number);
+      setNumber(oldNumber <= 0 ? 9 : oldNumber - 1);
+    } else if (delta > 0) {
+      playSound(sound.tick, mute || hideUI, volume);
+      const oldNumber = parseInt(number);
+      setNumber(oldNumber >= 9 ? 0 : oldNumber + 1);
+    }
+  }
   return [
     <div
       key="plus"
@@ -467,6 +487,7 @@ function Number({
     <div
       key="number"
       className={`number${parseInt(number) === 1 ? " number-one" : ""}`}
+      onWheel={findScrollDirectionOtherBrowsers}
     >
       {number}
     </div>,
