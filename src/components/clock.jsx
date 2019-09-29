@@ -346,6 +346,55 @@ function Number({
     number = 9;
   }
   const style = { opacity: hideUI ? 0 : 1 };
+  const [increase, setIncrease] = useState(false);
+  const [decrease, setDecrease] = useState(false);
+  const [timeout, settimeout] = useState(false);
+  useEffect(() => {
+    if (increase && !disabled && !timeout) {
+      playSound(sound.tick, mute || hideUI, volume);
+      const oldNumber = parseInt(number);
+      setNumber(oldNumber >= 9 ? 0 : oldNumber + 1);
+      settimeout(
+        setTimeout(() => {
+          clearTimeout(timeout);
+          settimeout(false);
+        }, 150)
+      );
+    }
+  }, [
+    disabled,
+    increase,
+    setNumber,
+    hideUI,
+    mute,
+    number,
+    volume,
+    timeout,
+    settimeout
+  ]);
+  useEffect(() => {
+    if (decrease && !disabled && !timeout) {
+      playSound(sound.tick, mute || hideUI, volume);
+      const oldNumber = parseInt(number);
+      setNumber(oldNumber <= 0 ? 9 : oldNumber - 1);
+      settimeout(
+        setTimeout(() => {
+          clearTimeout(timeout);
+          settimeout(false);
+        }, 150)
+      );
+    }
+  }, [
+    disabled,
+    decrease,
+    setNumber,
+    hideUI,
+    mute,
+    number,
+    volume,
+    timeout,
+    settimeout
+  ]);
   return [
     <div
       key="plus"
@@ -357,20 +406,12 @@ function Number({
         mute || hideUI,
         volume
       )}
-      onMouseLeave={playSound.bind(
-        this,
-        sound.mouseEnterLeave,
-        mute || hideUI,
-        volume
-      )}
-      onClick={() => {
-        if (disabled) {
-          return;
-        }
-        playSound(sound.tick, mute || hideUI, volume);
-        const oldNumber = parseInt(number);
-        setNumber(oldNumber >= 9 ? 0 : oldNumber + 1);
-      }}
+      onMouseLeave={() =>
+        playSound(sound.mouseEnterLeave, mute || hideUI, volume) &&
+        setIncrease(false)
+      }
+      onMouseDown={() => setIncrease(true)}
+      onMouseUp={() => setIncrease(false)}
     />,
     <div key="number-background" className="number-background">
       8
@@ -391,20 +432,12 @@ function Number({
         mute || hideUI,
         volume
       )}
-      onMouseLeave={playSound.bind(
-        this,
-        sound.mouseEnterLeave,
-        mute || hideUI,
-        volume
-      )}
-      onClick={() => {
-        if (disabled) {
-          return;
-        }
-        playSound(sound.tick, mute || hideUI, volume);
-        const oldNumber = parseInt(number);
-        setNumber(oldNumber <= 0 ? 9 : oldNumber - 1);
-      }}
+      onMouseLeave={() =>
+        playSound(sound.mouseEnterLeave, mute || hideUI, volume) &&
+        setDecrease(false)
+      }
+      onMouseDown={() => setDecrease(true)}
+      onMouseUp={() => setDecrease(false)}
     />
   ];
 }
