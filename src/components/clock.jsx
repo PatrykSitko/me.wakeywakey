@@ -329,26 +329,17 @@ function Clock({
   );
 }
 
-function Number({
-  volume,
-  mute,
+function useIncrease(
+  disabled,
+  increase,
   setNumber,
   hideUI,
-  disabled,
-  children: number
-}) {
-  if (number > 9) {
-    setNumber(0);
-    number = 0;
-  }
-  if (number < 0) {
-    setNumber(9);
-    number = 9;
-  }
-  const style = { opacity: hideUI ? 0 : 1 };
-  const [increase, setIncrease] = useState(false);
-  const [decrease, setDecrease] = useState(false);
-  const [timeout, settimeout] = useState(false);
+  mute,
+  number,
+  volume,
+  timeout,
+  settimeout
+) {
   useEffect(() => {
     if (increase && !disabled && !timeout) {
       playSound(sound.tick, mute || hideUI, volume);
@@ -372,6 +363,19 @@ function Number({
     timeout,
     settimeout
   ]);
+}
+
+function useDecrease(
+  disabled,
+  decrease,
+  setNumber,
+  hideUI,
+  mute,
+  number,
+  volume,
+  timeout,
+  settimeout
+) {
   useEffect(() => {
     if (decrease && !disabled && !timeout) {
       playSound(sound.tick, mute || hideUI, volume);
@@ -395,6 +399,50 @@ function Number({
     timeout,
     settimeout
   ]);
+}
+
+function Number({
+  volume,
+  mute,
+  setNumber,
+  hideUI,
+  disabled,
+  children: number
+}) {
+  if (number > 9) {
+    setNumber(0);
+    number = 0;
+  }
+  if (number < 0) {
+    setNumber(9);
+    number = 9;
+  }
+  const style = { opacity: hideUI ? 0 : 1 };
+  const [increase, setIncrease] = useState(false);
+  const [decrease, setDecrease] = useState(false);
+  const [timeout, settimeout] = useState(false);
+  useIncrease(
+    disabled,
+    increase,
+    setNumber,
+    hideUI,
+    mute,
+    number,
+    volume,
+    timeout,
+    settimeout
+  );
+  useDecrease(
+    disabled,
+    decrease,
+    setNumber,
+    hideUI,
+    mute,
+    number,
+    volume,
+    timeout,
+    settimeout
+  );
   return [
     <div
       key="plus"
