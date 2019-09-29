@@ -8,6 +8,7 @@
   z-index: 0;
   color: rgba(12, 238, 208, 0.1);
   user-select: none;
+  cursor: url(../images/time-cursor.png), auto;
 }
 .number {
   left: 3.3vmin;
