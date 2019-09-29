@@ -11,9 +11,11 @@
   color: rgba(240, 248, 255, 0.966);
   cursor: url(../images/facebook.png), auto;
 }
+
 .author-and-owner-notice a:hover {
   color: rgba(12, 238, 208, 0.4);
 }
+
 .copyright-notice {
   font-size: 1.25vmin;
   vertical-align: super;
