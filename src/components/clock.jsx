@@ -484,7 +484,8 @@ function Number({
       onMouseDown={() => setIncrease(true)}
       onMouseUp={() => setIncrease(false)}
     />,
-    <div key="number-background" className="number-background">
+    <div key="number-background" className="number-background"
+    onWheel={findScrollDirectionOtherBrowsers}>
       8
     </div>,
     <div
