@@ -15,6 +15,7 @@
   z-index: 1;
   color: rgb(51, 134, 51);
   user-select: none;
+  cursor: url(../images/volume-cursor.png), auto;
 }
 .number-one {
   left: 6.3vmin;
