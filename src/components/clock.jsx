@@ -445,6 +445,9 @@ function Number({
   );
   // copied from vasi (https://stackoverflow.com/users/7702397/vasi  -  https://stackoverflow.com/questions/31223341/detecting-scroll-direction)
   function findScrollDirectionOtherBrowsers(event) {
+    if (disabled) {
+      return;
+    }
     var delta;
 
     if (event.wheelDelta) {
