@@ -1,7 +1,7 @@
 .logo-container {
   position: fixed;
   z-index: -1;
-  top: -0.5vmin;
+  top: -1.5vmin;
   left: calc(50% - 27.75vmin);
   width: 54.5vmin;
   font-size: 2.4vmin;

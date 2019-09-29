@@ -5,7 +5,7 @@ import Background from "./components/background";
 import SoundPicker from "./components/soundPicker";
 import SoundList from "./components/soundList";
 import defaultSoundList from "./components/defaultSounds";
-import NotFinishedNotice from "./components/notFinishedNotice";
+// import NotFinishedNotice from "./components/notFinishedNotice";
 import CookiesNotice from "./components/cookiesNotice";
 import ArmAlarm from "./components/armAlarm";
 import WakeyWakeyLogo from "./components/wakeyWakeyLogo";
@@ -21,8 +21,9 @@ function determineInitialValue(storedName, returnIfNull) {
     : returnIfNull;
 }
 function App() {
-  const [cookiesAccepted,setCookiesAccepted] = useState(
-    determineInitialValue("cookiesAccepted", false));
+  const [cookiesAccepted, setCookiesAccepted] = useState(
+    determineInitialValue("cookiesAccepted", false)
+  );
   const [soundList, setList] = useState(defaultSoundList);
   const [soundToAdd, setSoundToAdd] = useState(null);
   const [buttonsMuted, setButtonsMuted] = useState(
@@ -56,11 +57,18 @@ function App() {
     setSelectedSoundEntryIndexArray
   ]);
   useEffect(() => {
-    const storedCookiesAccepted = window.localStorage.getItem("cookiesAccepted");
+    const storedCookiesAccepted = window.localStorage.getItem(
+      "cookiesAccepted"
+    );
     if (storedCookiesAccepted === null && cookiesAccepted) {
-      window.localStorage.setItem("cookiesAccepted", JSON.stringify({ cookiesAccepted }));
-    } 
-    if(!cookiesAccepted || cookiesAccepted === COOKIES_DECLINED){ return;}
+      window.localStorage.setItem(
+        "cookiesAccepted",
+        JSON.stringify({ cookiesAccepted })
+      );
+    }
+    if (!cookiesAccepted || cookiesAccepted === COOKIES_DECLINED) {
+      return;
+    }
     const storedVolumeSliderMarginTop = window.localStorage.getItem(
       "volumeSliderMarginTop"
     );
@@ -104,12 +112,22 @@ function App() {
         );
       }
     }
-  }, [buttonsMuted, soundList, volume, volumeSliderMarginTop,cookiesAccepted,setCookiesAccepted]);
+  }, [
+    buttonsMuted,
+    soundList,
+    volume,
+    volumeSliderMarginTop,
+    cookiesAccepted,
+    setCookiesAccepted
+  ]);
   return (
     <div className="App">
       <Background night={nightVideo} />
-      <NotFinishedNotice />
-      <CookiesNotice {...{cookiesAccepted,setCookiesAccepted,mute:buttonsMuted,volume}}/>:
+      {/* <NotFinishedNotice /> */}
+      <CookiesNotice
+        {...{ cookiesAccepted, setCookiesAccepted, mute: buttonsMuted, volume }}
+      />
+      :
       <WakeyWakeyLogo />
       <ArmAlarm
         {...{
