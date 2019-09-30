@@ -3,6 +3,7 @@ import { playSound, sounds as sound } from "./soundPlayer";
 import VolumeController from "./volumeController";
 import speakerImage from "../images/speaker.svg";
 import speakerMutedImage from "../images/speaker-muted.svg";
+import FacebookShareButton from "./facebookShareButton";
 import "./clock.css";
 
 function useMinutesCalibrator(
@@ -307,6 +308,7 @@ function Clock({
           {minutesRight}
         </Number>
       </div>
+      <FacebookShareButton />
       <img
         className={`clock-buttons-mute${
           buttonsMuted ? " clock-buttons-muted" : ""
@@ -484,13 +486,18 @@ function Number({
       onMouseDown={() => setIncrease(true)}
       onMouseUp={() => setIncrease(false)}
     />,
-    <div key="number-background" className={`number-background${hideUI ? " default-cursor" : ""}`}
-    onWheel={findScrollDirectionOtherBrowsers}>
+    <div
+      key="number-background"
+      className={`number-background${hideUI ? " default-cursor" : ""}`}
+      onWheel={findScrollDirectionOtherBrowsers}
+    >
       8
     </div>,
     <div
       key="number"
-      className={`number${parseInt(number) === 1 ? " number-one" : ""}${hideUI ? " default-cursor" : ""}`}
+      className={`number${parseInt(number) === 1 ? " number-one" : ""}${
+        hideUI ? " default-cursor" : ""
+      }`}
       onWheel={findScrollDirectionOtherBrowsers}
     >
       {number}
