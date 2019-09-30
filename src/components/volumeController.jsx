@@ -25,7 +25,14 @@ function VolumeController({
     marginTop,
     setMarginTop
   );
-  useVolumeHandler(
+  useEffect(() => {
+    const nobSize = findNobSize(nobRef.current);
+    const oneSector = findOneSector(containerRef.current, nobSize);
+    const sectors = findSectors(oneSector);
+    const currentSector = findSector(sectors, marginTop, nobSize);
+    const volume = findVolume(currentSector);
+    setVolume(volume);
+  }, [
     nobRef,
     containerRef,
     volume,
@@ -33,7 +40,7 @@ function VolumeController({
     mousedown,
     mousemove,
     marginTop
-  );
+  ]);
   return [
     <div
       {...{
@@ -55,35 +62,15 @@ function VolumeController({
     </div>
   ];
 }
-function useVolumeHandler(
-  nobRef,
-  containerRef,
-  volume,
-  setVolume,
-  mousedown,
-  mousemove,
-  marginTop
-) {
-  useEffect(() => {
-    const nobSize = findNobSize(nobRef.current);
-    const oneSector = findOneSector(containerRef.current);
-    const sectors = findSectors(oneSector);
-    const currentSector = findSector(sectors, marginTop, nobSize);
-    let volume = `${currentSector / 100}`;
-    const dotIndex = volume.indexOf(".");
-    volume = volume.slice(0, dotIndex + 2);
-    volume = parseFloat(volume);
-    setVolume(volume > 1 ? 1 : volume < 0 ? 0 : volume);
-  }, [
-    nobRef,
-    containerRef,
-    volume,
-    setVolume,
-    mousedown,
-    mousemove,
-    marginTop
-  ]);
+
+function findVolume(currentSector) {
+  let volume = `${currentSector / 100}`;
+  const dotIndex = volume.indexOf(".");
+  volume = volume.slice(0, dotIndex + 2);
+  volume = parseFloat(volume);
+  return volume > 1 ? 1 : volume < 0 ? 0 : volume;
 }
+
 function findNobSize(currentNobRef) {
   const { top: nobTop, bottom: nobBottom } = ReactDOM.findDOMNode(
     currentNobRef
@@ -96,7 +83,7 @@ function findOneSector(currentContainerRef, nobSize) {
     currentContainerRef
   ).getBoundingClientRect();
   const sectorRange = containerBottom - containerTop - nobSize / 2;
-  return sectorRange * 0.01;
+  return parseFloat(sectorRange * 0.01);
 }
 
 function findSectors(oneSector) {

@@ -144,7 +144,7 @@ function ArmAlarm({
       <div
         onClick={() =>
           !alarmArmed &&
-          playSound(sound.confirm, mute, volume) &&
+          playSound(sound._switch, mute, volume) &&
           setAlarmArmed(!alarmArmed)
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
@@ -160,7 +160,7 @@ function ArmAlarm({
           alarmArmed &&
           allowedToPlaySongs &&
           !snooze &&
-          playSound(sound.confirm, mute, volume) &&
+          playSound(sound.snooze, mute, volume) &&
           setSnooze(!snooze)
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
@@ -178,7 +178,7 @@ function ArmAlarm({
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onClick={() =>
           alarmArmed &&
-          playSound(sound.confirm, mute, volume) &&
+          playSound(sound._switch, mute, volume) &&
           (setAllowedToPlaySongs(false) ||
             setSnooze(false) ||
             setAlarmArmed(!alarmArmed))
