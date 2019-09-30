@@ -25,32 +25,7 @@ function VolumeController({
     marginTop,
     setMarginTop
   );
-  useEffect(() => {
-    const { top: nobTop, bottom: nobBottom } = ReactDOM.findDOMNode(
-      nobRef.current
-    ).getBoundingClientRect();
-    const { top: containerTop, bottom: containerBottom } = ReactDOM.findDOMNode(
-      containerRef.current
-    ).getBoundingClientRect();
-    const nobSize = nobBottom - nobTop;
-    const sectorRange = containerBottom - containerTop - nobSize / 2;
-    const oneSector = sectorRange * 0.01;
-    // const sector = containerBottom - nobBottom - nobSize / 2;
-    const sectors = (() => {
-      let sectors = [];
-      for (let counter = 0; counter < 100; counter++) {
-        const newSector = oneSector * counter;
-        sectors = sectors.concat(newSector);
-      }
-      return sectors.reverse();
-    })();
-    const currentSector = findSector(sectors, marginTop, nobSize);
-    let volume = `${currentSector / 100}`;
-    const dotIndex = volume.indexOf(".");
-    volume = volume.slice(0, dotIndex + 2);
-    volume = parseFloat(volume);
-    setVolume(volume > 1 ? 1 : volume < 0 ? 0 : volume);
-  }, [
+  useVolumeHandler(
     nobRef,
     containerRef,
     volume,
@@ -58,7 +33,7 @@ function VolumeController({
     mousedown,
     mousemove,
     marginTop
-  ]);
+  );
   return [
     <div
       {...{
@@ -79,6 +54,60 @@ function VolumeController({
       <div className="volume-controller-volume-indicator" />
     </div>
   ];
+}
+function useVolumeHandler(
+  nobRef,
+  containerRef,
+  volume,
+  setVolume,
+  mousedown,
+  mousemove,
+  marginTop
+) {
+  useEffect(() => {
+    const nobSize = findNobSize(nobRef.current);
+    const oneSector = findOneSector(containerRef.current);
+    const sectors = findSectors(oneSector);
+    const currentSector = findSector(sectors, marginTop, nobSize);
+    let volume = `${currentSector / 100}`;
+    const dotIndex = volume.indexOf(".");
+    volume = volume.slice(0, dotIndex + 2);
+    volume = parseFloat(volume);
+    setVolume(volume > 1 ? 1 : volume < 0 ? 0 : volume);
+  }, [
+    nobRef,
+    containerRef,
+    volume,
+    setVolume,
+    mousedown,
+    mousemove,
+    marginTop
+  ]);
+}
+function findNobSize(currentNobRef) {
+  const { top: nobTop, bottom: nobBottom } = ReactDOM.findDOMNode(
+    currentNobRef
+  ).getBoundingClientRect();
+  return nobBottom - nobTop;
+}
+
+function findOneSector(currentContainerRef, nobSize) {
+  const { top: containerTop, bottom: containerBottom } = ReactDOM.findDOMNode(
+    currentContainerRef
+  ).getBoundingClientRect();
+  const sectorRange = containerBottom - containerTop - nobSize / 2;
+  return sectorRange * 0.01;
+}
+
+function findSectors(oneSector) {
+  return (() => {
+    let sectors = [];
+    for (let counter = 0; counter < 100; counter++) {
+      const newSector = oneSector * counter;
+      sectors = sectors.concat(newSector);
+    }
+    return sectors.reverse();
+  })();
 }
 function findSector(sectors, nobMarginTop, nobSize) {
   let volume = 0;
