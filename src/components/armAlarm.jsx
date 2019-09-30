@@ -14,6 +14,7 @@ function ArmAlarm({
   volume,
   mute
 }) {
+  const [snoozeTimeout, setSnoozeTimeout] = useState(false);
   const [trackedTimeout, setTrackedTimeout] = useState(false);
   const [trackedInterval, setTrackedInterval] = useState(false);
   const [allowedToPlaySongs, setAllowedToPlaySongs] = useState(false);
@@ -42,12 +43,14 @@ function ArmAlarm({
       setPlayerIsPlaying(false);
       setSnooze(false);
       setAllowedToPlaySongs(false);
-      const snoozeTimeout = setTimeout(() => {
-        if (alarmArmed) {
-          setAllowedToPlaySongs(true);
-        }
-        clearTimeout(snoozeTimeout);
-      }, 300000 - new Date().getSeconds() * 1000);
+      setSnoozeTimeout(
+        setTimeout(() => {
+          if (alarmArmed) {
+            setAllowedToPlaySongs(true);
+          }
+          clearTimeout(snoozeTimeout);
+        }, 300000 - new Date().getSeconds() * 1000)
+      );
       const newDate = new Date();
       newDate.setMinutes(new Date().getMinutes() + 5);
       const newHours =
@@ -95,10 +98,12 @@ function ArmAlarm({
     playerIsPlaying,
     setPlayerIsPlaying,
     allowedToPlaySongs,
-    setAllowedToPlaySongs
+    setAllowedToPlaySongs,
+    snoozeTimeout,
+    setSnoozeTimeout
   ]);
   useEffect(() => {
-    if (!trackedInterval) {
+    if (!trackedInterval && alarmArmed) {
       setTrackedInterval(
         setInterval(() => {
           if (!alarmArmed || !allowedToPlaySongs) {
@@ -145,7 +150,7 @@ function ArmAlarm({
         onClick={() =>
           !alarmArmed &&
           playSound(sound._switch, mute, volume) &&
-          setAlarmArmed(!alarmArmed)
+          setAlarmArmed(true)
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
@@ -179,9 +184,10 @@ function ArmAlarm({
         onClick={() =>
           alarmArmed &&
           playSound(sound._switch, mute, volume) &&
-          (setAllowedToPlaySongs(false) ||
-            setSnooze(false) ||
-            setAlarmArmed(!alarmArmed))
+          (setSnooze(false) ||
+            setAlarmArmed(false) ||
+            setAllowedToPlaySongs(false) ||
+            setSnoozeTimeout(clearTimeout(snoozeTimeout)))
         }
         className={`arm-alarm-deactivate-button${
           !alarmArmed ? buttonActivatedClass : ""
