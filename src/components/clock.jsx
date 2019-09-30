@@ -484,13 +484,13 @@ function Number({
       onMouseDown={() => setIncrease(true)}
       onMouseUp={() => setIncrease(false)}
     />,
-    <div key="number-background" className="number-background"
+    <div key="number-background" className={`number-background${hideUI ? " default-cursor" : ""}`}
     onWheel={findScrollDirectionOtherBrowsers}>
       8
     </div>,
     <div
       key="number"
-      className={`number${parseInt(number) === 1 ? " number-one" : ""}`}
+      className={`number${parseInt(number) === 1 ? " number-one" : ""}${hideUI ? " default-cursor" : ""}`}
       onWheel={findScrollDirectionOtherBrowsers}
     >
       {number}
