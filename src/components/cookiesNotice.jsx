@@ -58,45 +58,47 @@ function CookiesNotice({ cookiesAccepted, setCookiesAccepted, mute, volume }) {
           <br />
           Never do I store any of your data at remote locations.
         </div>
-        <div
-          onMouseEnter={playSound.bind(
-            this,
-            sound.mouseEnterLeave,
-            mute,
-            volume
-          )}
-          onMouseLeave={playSound.bind(
-            this,
-            sound.mouseEnterLeave,
-            mute,
-            volume
-          )}
-          onClick={() =>
-            playSound(sound.confirm, mute, volume) && setCookiesAccepted(true)
-          }
-          className="cookies-notice-accept-button"
-        >
-          Accept
-        </div>
-        <div
-          onMouseEnter={playSound.bind(
-            this,
-            sound.mouseEnterLeave,
-            mute,
-            volume
-          )}
-          onMouseLeave={playSound.bind(
-            this,
-            sound.mouseEnterLeave,
-            mute,
-            volume
-          )}
-          onClick={() =>
-            playSound(sound.confirm, mute, volume) && setCookiesAccepted(null)
-          }
-          className="cookies-notice-decline-button"
-        >
-          Decline
+        <div className="cookies-notice-buttons-container">
+          <div
+            onMouseEnter={playSound.bind(
+              this,
+              sound.mouseEnterLeave,
+              mute,
+              volume
+            )}
+            onMouseLeave={playSound.bind(
+              this,
+              sound.mouseEnterLeave,
+              mute,
+              volume
+            )}
+            onClick={() =>
+              playSound(sound.confirm, mute, volume) && setCookiesAccepted(true)
+            }
+            className="cookies-notice-accept-button"
+          >
+            Accept
+          </div>
+          <div
+            onMouseEnter={playSound.bind(
+              this,
+              sound.mouseEnterLeave,
+              mute,
+              volume
+            )}
+            onMouseLeave={playSound.bind(
+              this,
+              sound.mouseEnterLeave,
+              mute,
+              volume
+            )}
+            onClick={() =>
+              playSound(sound.confirm, mute, volume) && setCookiesAccepted(null)
+            }
+            className="cookies-notice-decline-button"
+          >
+            Decline
+          </div>
         </div>
       </div>
     )
