@@ -38,6 +38,7 @@
 
 .cookies-notice-decline-button,
 .cookies-notice-accept-button {
+  padding-bottom: 0.5vmin;
   font-size: 4vmin;
   text-align: center;
   background-color: #7f7f7f95;
