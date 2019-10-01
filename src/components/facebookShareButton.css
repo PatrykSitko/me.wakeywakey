@@ -4,7 +4,6 @@
   color: aliceblue;
   background-color: #4267b2;
   display: flex;
-  z-index: 5;
   font-weight: bolder;
   border-radius: 0.3vmin;
   cursor: url(../images/facebook-cursor.png), auto;
