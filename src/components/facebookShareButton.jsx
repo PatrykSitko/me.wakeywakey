@@ -1,22 +1,26 @@
 import React from "react";
+import facebookLogo from "../images/facebook-logo.svg";
 import "./facebookShareButton.css";
 
 function FacebookShareButton() {
   return (
     <div
-      class="fb-share-button"
-      data-href="https://www.wakeywakey.me"
-      data-layout="button_count"
-      data-size="small"
+      className="facebook-share-button-container"
+      onClick={() =>
+        window.open(
+          "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.wakeywakey.me%2F&amp;src=sdkpreparse",
+          "_blank",
+          {},
+          false
+        )
+      }
     >
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.wakeywakey.me%2F&amp;src=sdkpreparse"
-        class="fb-xfbml-parse-ignore"
-      >
-        Share
-      </a>
+      <img
+        className="facebook-share-button-image"
+        src={facebookLogo}
+        alt="facebook logo"
+      />
+      <div className="facebook-share-button">Share</div>
     </div>
   );
 }

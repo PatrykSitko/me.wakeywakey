@@ -1,4 +1,21 @@
-.fb-share-button {
-  /*bottom-potition: margin-top: 18vmin;*/
-  margin-left: 44.8vmin;
+.facebook-share-button-container {
+  margin-left: 45.3vmin;
+  height: 2.2vmin;
+  color: aliceblue;
+  background-color: #4267b2;
+  display: flex;
+  z-index: 5;
+  font-weight: bolder;
+  border-radius: 0.3vmin;
+}
+.facebook-share-button-image {
+  margin-top: 0.6vmin;
+  margin-left: 0.5vmin;
+  margin-right: 0.8vmin;
+  height: calc(100% - 1vmin);
+}
+.facebook-share-button {
+  line-height: 2.325vmin;
+  font-size: 1.2vmin;
+  padding-right: 0.8vmin;
 }
