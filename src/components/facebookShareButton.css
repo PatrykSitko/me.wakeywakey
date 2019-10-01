@@ -14,9 +14,11 @@
   margin-left: 0.5vmin;
   margin-right: 0.8vmin;
   height: calc(100% - 1vmin);
+  cursor: url(../images/facebook-cursor.png), auto;
 }
 .facebook-share-button {
   line-height: 2.325vmin;
   font-size: 1.2vmin;
   padding-right: 0.8vmin;
+  cursor: url(../images/facebook-cursor.png), auto;
 }
