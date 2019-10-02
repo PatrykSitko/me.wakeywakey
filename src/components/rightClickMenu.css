@@ -1,2 +1,22 @@
+.right-click-menu-container {
+  background-color: aliceblue;
+}
+
 .right-click-menu {
+  opacity: 0;
+  position: fixed;
+  z-index: 4;
+  width: 30vmin;
+  min-height: 1vmin;
+  max-height: 100%;
+  height: fit-content;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 1.5vmin;
+  content: "";
+}
+
+.right-click-menu-visible {
+  transition: opacity 0.5s;
+  opacity: 1;
 }

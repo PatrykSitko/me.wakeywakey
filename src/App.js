@@ -5,6 +5,8 @@ import Background from "./components/background";
 import SoundPicker from "./components/soundPicker";
 import SoundList from "./components/soundList";
 import defaultSoundList from "./components/defaultSounds";
+import RightClickMenu from "./components/rightClickMenu";
+import RightClickMenuEntry from "./components/rightClickMenuEntry";
 // import NotFinishedNotice from "./components/notFinishedNotice";
 import CookiesNotice from "./components/cookiesNotice";
 import ArmAlarm from "./components/armAlarm";
@@ -122,6 +124,20 @@ function App() {
   ]);
   return (
     <div className="App">
+      <RightClickMenu>
+        <RightClickMenuEntry
+          action={() =>
+            window.open(
+              "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.wakeywakey.me%2F&amp;src=sdkpreparse",
+              "_blank",
+              {},
+              false
+            )
+          }
+        >
+          Share on Facebook
+        </RightClickMenuEntry>
+      </RightClickMenu>
       <Background night={nightVideo} />
       {/* <NotFinishedNotice /> */}
       <CookiesNotice

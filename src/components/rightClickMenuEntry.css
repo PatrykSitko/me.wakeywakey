@@ -1,2 +1,16 @@
 .right-click-menu-entry {
+  border: 0.3vmin solid rgb(180, 185, 196);
+  border-radius: 1.5vmin;
+  margin: 0.5vmin;
+  font-size: 3vmin;
+  font-weight: bolder;
+  text-align: center;
+  transition: background-color 0.3s;
+  color: aliceblue;
+  background-color: #4267b2ad;
+  transition: background-color 0.3s;
+}
+
+.right-click-menu-entry:hover {
+  background-color: #4267b2d5;
 }
