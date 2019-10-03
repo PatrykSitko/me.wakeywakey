@@ -166,7 +166,7 @@ function ArmAlarm({
           allowedToPlaySongs &&
           !snooze &&
           playSound(sound.snooze, mute, volume) &&
-          setSnooze(!snooze)
+          setSnooze(true)
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
