@@ -244,8 +244,11 @@ function findTimeoutTime(hours, minutes) {
     date.getMinutes(),
     date.getSeconds()
   );
-  const wakeupSeconds = seconds - currentTimeSeconds;
-  return (wakeupSeconds <= 0 ? ONE_DAY - wakeupSeconds : wakeupSeconds) * 1000;
+  return (
+    (seconds <= currentTimeSeconds
+      ? ONE_DAY - currentTimeSeconds + seconds
+      : seconds - currentTimeSeconds) * 1000
+  );
 }
 function findSeconds(hours, minutes, seconds = 0) {
   return (hours * 60 + minutes) * 60 + seconds;
