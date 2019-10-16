@@ -275,7 +275,7 @@ function Clock({
         currentNumberInputField === 0 ? (
           <NumberInputField
             {...{
-              onClick: () => setCurrentNumberInputField(0),
+              onClick: setCurrentNumberInputField,
               setNumber: number => setHoursLeft(number > 2 ? 2 : number),
               goToNextField,
               number: hoursLeft
@@ -299,7 +299,7 @@ function Clock({
         currentNumberInputField === 1 ? (
           <NumberInputField
             {...{
-              onClick: () => setCurrentNumberInputField(1),
+              onClick: setCurrentNumberInputField,
               setNumber: number =>
                 setHoursRight(hoursLeft >= 2 && number > 3 ? 3 : number),
               goToNextField,
@@ -325,7 +325,7 @@ function Clock({
         currentNumberInputField === 2 ? (
           <NumberInputField
             {...{
-              onClick: () => setCurrentNumberInputField(2),
+              onClick: setCurrentNumberInputField,
               setNumber: number => setMinutesLeft(number > 5 ? 5 : number),
               goToNextField,
               number: minutesLeft
@@ -349,7 +349,7 @@ function Clock({
         currentNumberInputField === 3 ? (
           <NumberInputField
             {...{
-              onClick: () => setCurrentNumberInputField(2),
+              onClick: setCurrentNumberInputField,
               setNumber: setMinutesRight,
               goToNextField: () => setCurrentNumberInputField(undefined),
               number: minutesRight
@@ -643,7 +643,7 @@ function NumberInputField({ number, setNumber, goToNextField, ...other }) {
       className={`input-number${numberBlink ? " input-number-visible" : ""}${
         parseInt(number) === 1 ? " number-one" : ""
       } default-cursor`}
-      {...{ other }}
+      {...other}
     >
       {number}
     </div>
