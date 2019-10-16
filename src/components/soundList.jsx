@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import "./soundList.css";
 
 function SoundList({
+  clockState,
   selectedSoundEntryIndexArray,
   setSelectedSoundEntryIndexArray,
   setList,
@@ -35,7 +36,16 @@ function SoundList({
     }
   }, [ref, windowDimensions, maxHeight, setMaxHeight]);
   return (
-    <div className="sound-list-container" ref={ref}>
+    <div
+      className={`sound-list-container${
+        clockState === "on"
+          ? " clock-running"
+          : clockState === "snooze"
+          ? " clock-snooze"
+          : ""
+      }`}
+      ref={ref}
+    >
       <ul
         className="sound-list"
         style={{ maxHeight }}

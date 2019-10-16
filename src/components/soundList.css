@@ -4,6 +4,16 @@
   border-radius: 3vmin;
   width: 50.5vmin;
   margin: auto;
+  transition: background-color 0.3s;
+}
+.clock-running {
+  background-color: rgba(21, 161, 21, 0.3);
+  transition: background-color 0.3s;
+}
+
+.clock-snooze {
+  background-color: rgba(172, 255, 47, 0.3);
+  transition: background-color 0.3s;
 }
 
 .sound-list {

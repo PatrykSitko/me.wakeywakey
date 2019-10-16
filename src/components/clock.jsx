@@ -191,6 +191,7 @@ const minutes =
     : "0".concat(date.getMinutes().toString());
 
 function Clock({
+  state,
   volume,
   setVolume,
   hideUI,
@@ -268,7 +269,13 @@ function Clock({
   return (
     <div
       {...props}
-      className={`clock${className ? " ".concat(className) : ""}`}
+      className={`clock${
+        state === "on"
+          ? " clock-running"
+          : state === "snooze"
+          ? " clock-snooze"
+          : ""
+      }${className ? " ".concat(className) : ""}`}
     >
       <div className="clock-time clock-hours-left">
         {typeof currentNumberInputField === "number" &&

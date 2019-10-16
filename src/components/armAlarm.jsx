@@ -5,6 +5,7 @@ import "./ArmAlarm.css";
 const ONE_DAY = 24 * 60 * 60;
 const buttonActivatedClass = " arm-alarm-button-activated";
 function ArmAlarm({
+  setClockState,
   alarmArmed,
   setAlarmArmed,
   wakeupTime = { minutesLeft: 0, minutesRight: 0, hoursLeft: 0, hoursRight: 0 },
@@ -68,6 +69,7 @@ function ArmAlarm({
         minutesRight: newMinutes.slice(1, 2)
       });
     } else if (allowedToPlaySongs) {
+      setClockState("on");
       playSongs(
         player,
         soundList,
@@ -100,7 +102,8 @@ function ArmAlarm({
     allowedToPlaySongs,
     setAllowedToPlaySongs,
     snoozeTimeout,
-    setSnoozeTimeout
+    setSnoozeTimeout,
+    setClockState
   ]);
   useEffect(() => {
     if (!trackedInterval && alarmArmed) {
@@ -148,9 +151,10 @@ function ArmAlarm({
     <div className="arm-alarm-buttons-container">
       <div
         onClick={() =>
-          !alarmArmed &&
-          playSound(sound._switch, mute, volume) &&
-          setAlarmArmed(true)
+          (!alarmArmed &&
+            playSound(sound._switch, mute, volume) &&
+            setAlarmArmed(true)) ||
+          setClockState("on")
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
@@ -162,11 +166,12 @@ function ArmAlarm({
       </div>
       <div
         onClick={() =>
-          alarmArmed &&
-          allowedToPlaySongs &&
-          !snooze &&
-          playSound(sound.snooze, mute, volume) &&
-          setSnooze(true)
+          (alarmArmed &&
+            allowedToPlaySongs &&
+            !snooze &&
+            playSound(sound.snooze, mute, volume) &&
+            setSnooze(true)) ||
+          setClockState("snooze")
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
@@ -182,12 +187,13 @@ function ArmAlarm({
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onClick={() =>
-          alarmArmed &&
-          playSound(sound._switch, mute, volume) &&
-          (setSnooze(false) ||
-            setAlarmArmed(false) ||
-            setAllowedToPlaySongs(false) ||
-            setSnoozeTimeout(clearTimeout(snoozeTimeout)))
+          (alarmArmed &&
+            playSound(sound._switch, mute, volume) &&
+            (setSnooze(false) ||
+              setAlarmArmed(false) ||
+              setAllowedToPlaySongs(false) ||
+              setSnoozeTimeout(clearTimeout(snoozeTimeout)))) ||
+          setClockState("off")
         }
         className={`arm-alarm-deactivate-button${
           !alarmArmed ? buttonActivatedClass : ""
