@@ -46,9 +46,9 @@ function CookiesNotice({ cookiesAccepted, setCookiesAccepted, mute, volume }) {
     !removeContainer && (
       <div className={containerClassName}>
         <div className="cookies-notice">
-          This website is using adsense cookies and your window local storage to
-          store application state. By clicking accept you will allow me to make
-          use of your (sadly limited{" "}
+          This website is using your window local storage to store application
+          state. By clicking accept you will allow me to make use of your (sadly
+          limited{" "}
           <span role="img" aria-label="Sad face">
             😢
           </span>
