@@ -42,6 +42,7 @@ function App() {
   const [wakeupTime, setWakeupTime] = useState(undefined);
   const [wakeupTimeExternal, setWakeupTimeExternal] = useState(undefined);
   const [alarmArmed, setAlarmArmed] = useState(false);
+  const [clockState, setClockState] = useState("off");
   useEffect(() => {
     if (soundToAdd) {
       setSelectedSoundEntryIndexArray(
@@ -147,6 +148,7 @@ function App() {
       <WakeyWakeyLogo />
       <ArmAlarm
         {...{
+          setClockState,
           wakeupTime,
           setWakeupTime,
           soundList,
@@ -160,6 +162,7 @@ function App() {
       />
       <Clock
         {...{
+          state: clockState,
           wakeupTimeExternal,
           setWakeupTimeExternal,
           buttonsMuted,
@@ -183,6 +186,7 @@ function App() {
       />
       <SoundList
         {...{
+          clockState,
           setList,
           selectedSoundEntryIndexArray,
           setSelectedSoundEntryIndexArray,
