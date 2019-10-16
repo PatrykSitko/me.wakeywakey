@@ -276,7 +276,7 @@ function Clock({
           <NumberInputField
             {...{
               onClick: () => setCurrentNumberInputField(0),
-              setNumber: setHoursLeft,
+              setNumber: number => setHoursLeft(number > 2 ? 2 : number),
               goToNextField,
               number: hoursLeft
             }}
