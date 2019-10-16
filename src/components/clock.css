@@ -2,7 +2,8 @@
   font-family: "digi";
   src: url("../fonts/digi.ttf") format("truetype");
 }
-.number-background {
+.number-background,
+.input-number-background {
   left: 3.3vmin;
   position: absolute;
   z-index: 0;
@@ -10,13 +11,26 @@
   user-select: none;
   cursor: url(../images/time-cursor.png), auto;
 }
-.number {
+.number,
+.input-number {
   left: 3.3vmin;
   position: absolute;
   z-index: 1;
   color: rgb(51, 134, 51);
   user-select: none;
   cursor: url(../images/time-cursor.png), auto;
+}
+.input-number,
+.input-number-background {
+  margin-top: 2vmin;
+}
+.input-number {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+.input-number-visible {
+  opacity: 1;
+  transition: opacity 1s ease-in;
 }
 .number-one {
   left: 6.3vmin;

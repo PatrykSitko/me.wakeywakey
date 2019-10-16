@@ -213,6 +213,9 @@ function Clock({
   const [minutesRight, setMinutesRight] = useState(
     parseInt(minutes.slice(1, 2))
   );
+  const [currentNumberInputField, setCurrentNumberInputField] = useState(
+    undefined
+  );
   useMinutesCalibrator(
     hoursLeft,
     hoursRight,
@@ -258,55 +261,112 @@ function Clock({
     setMinutesRight,
     setMinutesLeft
   ]);
+  const goToNextField = param =>
+    setCurrentNumberInputField(
+      param === "quit" ? undefined : currentNumberInputField + 1
+    );
   return (
     <div
       {...props}
       className={`clock${className ? " ".concat(className) : ""}`}
     >
       <div className="clock-time clock-hours-left">
-        <Number
-          {...{ hideUI }}
-          disabled={hideUI}
-          mute={buttonsMuted}
-          setNumber={setHoursLeft}
-          volume={volume}
-        >
-          {hoursLeft}
-        </Number>
+        {typeof currentNumberInputField === "number" &&
+        currentNumberInputField === 0 ? (
+          <NumberInputField
+            {...{
+              onClick: () => setCurrentNumberInputField(0),
+              setNumber: setHoursLeft,
+              goToNextField,
+              number: hoursLeft
+            }}
+          />
+        ) : (
+          <Number
+            {...{ hideUI }}
+            disabled={hideUI}
+            mute={buttonsMuted}
+            setNumber={setHoursLeft}
+            volume={volume}
+            onClick={() => setCurrentNumberInputField(0)}
+          >
+            {hoursLeft}
+          </Number>
+        )}
       </div>
       <div className="clock-time clock-hours-right">
-        <Number
-          {...{ hideUI }}
-          disabled={hideUI}
-          mute={buttonsMuted}
-          setNumber={setHoursRight}
-          volume={volume}
-        >
-          {hoursRight}
-        </Number>
+        {typeof currentNumberInputField === "number" &&
+        currentNumberInputField === 1 ? (
+          <NumberInputField
+            {...{
+              onClick: () => setCurrentNumberInputField(1),
+              setNumber: number =>
+                setHoursRight(hoursLeft >= 2 && number > 3 ? 3 : number),
+              goToNextField,
+              number: hoursRight
+            }}
+          />
+        ) : (
+          <Number
+            {...{ hideUI }}
+            disabled={hideUI}
+            mute={buttonsMuted}
+            setNumber={setHoursRight}
+            volume={volume}
+            onClick={() => setCurrentNumberInputField(1)}
+          >
+            {hoursRight}
+          </Number>
+        )}
       </div>
       <div className="clock-separator">:</div>
       <div className="clock-time clock-minutes-left">
-        <Number
-          {...{ hideUI }}
-          disabled={hideUI}
-          mute={buttonsMuted}
-          setNumber={setMinutesLeft}
-          volume={volume}
-        >
-          {minutesLeft}
-        </Number>
+        {typeof currentNumberInputField === "number" &&
+        currentNumberInputField === 2 ? (
+          <NumberInputField
+            {...{
+              onClick: () => setCurrentNumberInputField(2),
+              setNumber: number => setMinutesLeft(number > 5 ? 5 : number),
+              goToNextField,
+              number: minutesLeft
+            }}
+          />
+        ) : (
+          <Number
+            {...{ hideUI }}
+            disabled={hideUI}
+            mute={buttonsMuted}
+            setNumber={setMinutesLeft}
+            volume={volume}
+            onClick={() => setCurrentNumberInputField(2)}
+          >
+            {minutesLeft}
+          </Number>
+        )}
       </div>
       <div className="clock-time clock-minutes-right">
-        <Number
-          {...{ hideUI }}
-          disabled={hideUI}
-          mute={buttonsMuted}
-          setNumber={setMinutesRight}
-          volume={volume}
-        >
-          {minutesRight}
-        </Number>
+        {typeof currentNumberInputField === "number" &&
+        currentNumberInputField === 3 ? (
+          <NumberInputField
+            {...{
+              onClick: () => setCurrentNumberInputField(2),
+              setNumber: setMinutesRight,
+              goToNextField: () => setCurrentNumberInputField(undefined),
+              number: minutesRight
+            }}
+          />
+        ) : (
+          <Number
+            {...{ hideUI }}
+            disabled={hideUI}
+            mute={buttonsMuted}
+            setNumber={setMinutesRight}
+            volume={volume}
+            onClick={() => setCurrentNumberInputField(3)}
+          >
+            {minutesRight}
+          </Number>
+        )}
       </div>
       <FacebookShareButton />
       <img
@@ -409,7 +469,8 @@ function Number({
   setNumber,
   hideUI,
   disabled,
-  children: number
+  children: number,
+  ...other
 }) {
   if (number > 9) {
     setNumber(0);
@@ -499,6 +560,7 @@ function Number({
         hideUI ? " default-cursor" : ""
       }`}
       onWheel={findScrollDirectionOtherBrowsers}
+      {...other}
     >
       {number}
     </div>,
@@ -519,6 +581,72 @@ function Number({
       onMouseDown={() => setDecrease(true)}
       onMouseUp={() => setDecrease(false)}
     />
+  ];
+}
+
+function registerKeyEvent(keys, setKeys, event) {
+  if (event && event.key) {
+    setKeys(keys.concat(event.key));
+  }
+}
+function NumberInputField({ number, setNumber, goToNextField, ...other }) {
+  const [numberBlinkingTimeout, setNumberBlinkingTimeout] = useState(undefined);
+  const [numberBlink, switchNumberBlink] = useState(true);
+  const [keyEventListener, setKeyEventListener] = useState(undefined);
+  const [keys, setKeys] = useState([]);
+  useEffect(() => {
+    if (!keyEventListener) {
+      setKeyEventListener(registerKeyEvent.bind(this, keys, setKeys));
+      window.addEventListener(
+        "keydown",
+        registerKeyEvent.bind(this, keys, setKeys)
+      );
+    }
+    return () => window.removeEventListener("keydown", keyEventListener);
+  }, [goToNextField, keyEventListener, setKeyEventListener, keys, setKeys]);
+  useEffect(() => {
+    if (!numberBlinkingTimeout) {
+      switchNumberBlink(!numberBlink);
+      setNumberBlinkingTimeout(
+        setTimeout(() => {
+          setNumberBlinkingTimeout(clearTimeout(numberBlinkingTimeout));
+        }, 1000)
+      );
+    }
+    return () => clearTimeout(numberBlinkingTimeout);
+  }, [
+    numberBlinkingTimeout,
+    setNumberBlinkingTimeout,
+    numberBlink,
+    switchNumberBlink
+  ]);
+  useEffect(() => {
+    const nonNumbers = candidate =>
+      candidate === "Enter"
+        ? goToNextField("quit")
+        : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].includes(parseInt(candidate));
+    const fliteredKeys = keys.filter(nonNumbers);
+    if (fliteredKeys.length > 0) {
+      setNumber(fliteredKeys.pop());
+      goToNextField();
+    }
+  }, [keys, setNumber, goToNextField]);
+  return [
+    <div
+      key="input-number-background"
+      className={`input-number-background default-cursor`}
+    >
+      8
+    </div>,
+    <div
+      key="input-number"
+      className={`input-number${numberBlink ? " input-number-visible" : ""}${
+        parseInt(number) === 1 ? " number-one" : ""
+      } default-cursor`}
+      {...{ other }}
+    >
+      {number}
+    </div>
   ];
 }
 export default Clock;
