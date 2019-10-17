@@ -5,6 +5,7 @@ import "./ArmAlarm.css";
 const ONE_DAY = 24 * 60 * 60;
 const buttonActivatedClass = " arm-alarm-button-activated";
 function ArmAlarm({
+  clockState,
   setClockState,
   alarmArmed,
   setAlarmArmed,
@@ -154,7 +155,7 @@ function ArmAlarm({
           (!alarmArmed &&
             playSound(sound._switch, mute, volume) &&
             setAlarmArmed(true)) ||
-          setClockState("on")
+          (!clockState.includes("snooze") && setClockState("on"))
         }
         onMouseEnter={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}
         onMouseLeave={playSound.bind(this, sound.mouseEnterLeave, mute, volume)}

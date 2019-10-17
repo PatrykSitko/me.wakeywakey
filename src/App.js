@@ -148,6 +148,7 @@ function App() {
       <WakeyWakeyLogo />
       <ArmAlarm
         {...{
+          clockState,
           setClockState,
           wakeupTime,
           setWakeupTime,
