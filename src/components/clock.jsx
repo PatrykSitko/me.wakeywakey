@@ -393,7 +393,9 @@ function Clock({
                 playSound(sound.snooze, buttonsMuted, volume) &&
                 setCurrentNumberInputField(),
               setNumber: setMinutesRight,
-              goToNextField: () => setCurrentNumberInputField(undefined),
+              goToNextField: () =>
+                playSound(sound.snooze, buttonsMuted, volume) &&
+                setCurrentNumberInputField(),
               number: minutesRight,
               mute: buttonsMuted,
               volume: volume
