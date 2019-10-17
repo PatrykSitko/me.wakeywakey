@@ -262,6 +262,11 @@ function Clock({
     setMinutesRight,
     setMinutesLeft
   ]);
+  useEffect(() => {
+    if (hideUI && typeof currentNumberInputField === "number") {
+      setCurrentNumberInputField(undefined);
+    }
+  }, [hideUI, currentNumberInputField, setCurrentNumberInputField]);
   const goToNextField = param =>
     setCurrentNumberInputField(
       param === "quit" ? undefined : currentNumberInputField + 1
@@ -278,14 +283,19 @@ function Clock({
       }${className ? " ".concat(className) : ""}`}
     >
       <div className="clock-time clock-hours-left">
-        {typeof currentNumberInputField === "number" &&
+        {!hideUI &&
+        typeof currentNumberInputField === "number" &&
         currentNumberInputField === 0 ? (
           <NumberInputField
             {...{
-              onClick: setCurrentNumberInputField,
+              onClick: () =>
+                playSound(sound.snooze, buttonsMuted, volume) &&
+                setCurrentNumberInputField(),
               setNumber: number => setHoursLeft(number > 2 ? 2 : number),
               goToNextField,
-              number: hoursLeft
+              number: hoursLeft,
+              mute: buttonsMuted,
+              volume: volume
             }}
           />
         ) : (
@@ -295,22 +305,31 @@ function Clock({
             mute={buttonsMuted}
             setNumber={setHoursLeft}
             volume={volume}
-            onClick={() => setCurrentNumberInputField(0)}
+            onClick={() =>
+              !hideUI &&
+              playSound(sound.snooze, buttonsMuted, volume) &&
+              setCurrentNumberInputField(0)
+            }
           >
             {hoursLeft}
           </Number>
         )}
       </div>
       <div className="clock-time clock-hours-right">
-        {typeof currentNumberInputField === "number" &&
+        {!hideUI &&
+        typeof currentNumberInputField === "number" &&
         currentNumberInputField === 1 ? (
           <NumberInputField
             {...{
-              onClick: setCurrentNumberInputField,
+              onClick: () =>
+                playSound(sound.snooze, buttonsMuted, volume) &&
+                setCurrentNumberInputField(),
               setNumber: number =>
                 setHoursRight(hoursLeft >= 2 && number > 3 ? 3 : number),
               goToNextField,
-              number: hoursRight
+              number: hoursRight,
+              mute: buttonsMuted,
+              volume: volume
             }}
           />
         ) : (
@@ -320,7 +339,11 @@ function Clock({
             mute={buttonsMuted}
             setNumber={setHoursRight}
             volume={volume}
-            onClick={() => setCurrentNumberInputField(1)}
+            onClick={() =>
+              !hideUI &&
+              playSound(sound.snooze, buttonsMuted, volume) &&
+              setCurrentNumberInputField(1)
+            }
           >
             {hoursRight}
           </Number>
@@ -328,14 +351,19 @@ function Clock({
       </div>
       <div className="clock-separator">:</div>
       <div className="clock-time clock-minutes-left">
-        {typeof currentNumberInputField === "number" &&
+        {!hideUI &&
+        typeof currentNumberInputField === "number" &&
         currentNumberInputField === 2 ? (
           <NumberInputField
             {...{
-              onClick: setCurrentNumberInputField,
+              onClick: () =>
+                playSound(sound.snooze, buttonsMuted, volume) &&
+                setCurrentNumberInputField(),
               setNumber: number => setMinutesLeft(number > 5 ? 5 : number),
               goToNextField,
-              number: minutesLeft
+              number: minutesLeft,
+              mute: buttonsMuted,
+              volume: volume
             }}
           />
         ) : (
@@ -345,21 +373,30 @@ function Clock({
             mute={buttonsMuted}
             setNumber={setMinutesLeft}
             volume={volume}
-            onClick={() => setCurrentNumberInputField(2)}
+            onClick={() =>
+              !hideUI &&
+              playSound(sound.snooze, buttonsMuted, volume) &&
+              setCurrentNumberInputField(2)
+            }
           >
             {minutesLeft}
           </Number>
         )}
       </div>
       <div className="clock-time clock-minutes-right">
-        {typeof currentNumberInputField === "number" &&
+        {!hideUI &&
+        typeof currentNumberInputField === "number" &&
         currentNumberInputField === 3 ? (
           <NumberInputField
             {...{
-              onClick: setCurrentNumberInputField,
+              onClick: () =>
+                playSound(sound.snooze, buttonsMuted, volume) &&
+                setCurrentNumberInputField(),
               setNumber: setMinutesRight,
               goToNextField: () => setCurrentNumberInputField(undefined),
-              number: minutesRight
+              number: minutesRight,
+              mute: buttonsMuted,
+              volume: volume
             }}
           />
         ) : (
@@ -369,7 +406,11 @@ function Clock({
             mute={buttonsMuted}
             setNumber={setMinutesRight}
             volume={volume}
-            onClick={() => setCurrentNumberInputField(3)}
+            onClick={() =>
+              !hideUI &&
+              playSound(sound.snooze, buttonsMuted, volume) &&
+              setCurrentNumberInputField(3)
+            }
           >
             {minutesRight}
           </Number>
@@ -596,7 +637,14 @@ function registerKeyEvent(keys, setKeys, event) {
     setKeys(keys.concat(event.key));
   }
 }
-function NumberInputField({ number, setNumber, goToNextField, ...other }) {
+function NumberInputField({
+  number,
+  setNumber,
+  goToNextField,
+  mute,
+  volume,
+  ...other
+}) {
   const [numberBlinkingTimeout, setNumberBlinkingTimeout] = useState(undefined);
   const [numberBlink, switchNumberBlink] = useState(true);
   const [keyEventListener, setKeyEventListener] = useState(undefined);
@@ -630,14 +678,15 @@ function NumberInputField({ number, setNumber, goToNextField, ...other }) {
   useEffect(() => {
     const nonNumbers = candidate =>
       candidate === "Enter"
-        ? goToNextField("quit")
+        ? playSound(sound.tick, mute, volume) && goToNextField("quit")
         : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].includes(parseInt(candidate));
     const fliteredKeys = keys.filter(nonNumbers);
     if (fliteredKeys.length > 0) {
       setNumber(fliteredKeys.pop());
+      playSound(sound.tick, mute, volume);
       goToNextField();
     }
-  }, [keys, setNumber, goToNextField]);
+  }, [keys, setNumber, goToNextField, mute, volume]);
   return [
     <div
       key="input-number-background"
