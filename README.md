@@ -4,7 +4,7 @@ Created to wake me up and earn some money tp live.
 
 I will ad adds later.
 
-When I think about a good ads experience for my user.
+When I will think about and thinkout a good solution for a good ads experience for my user.
 
 Until then I just can't add ads.
 
