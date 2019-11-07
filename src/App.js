@@ -7,13 +7,11 @@ import SoundList from "./components/soundList";
 import defaultSoundList from "./components/defaultSounds";
 import RightClickMenu from "./components/rightClickMenu";
 import RightClickMenuEntry from "./components/rightClickMenuEntry";
-// import NotFinishedNotice from "./components/notFinishedNotice";
 import CookiesNotice from "./components/cookiesNotice";
 import ArmAlarm from "./components/armAlarm";
 import WakeyWakeyLogo from "./components/wakeyWakeyLogo";
 import nightVideo from "./videos/universe.webm";
 import { vmin } from "./components/vscale.js";
-import Numpad from "./components/numpad";
 
 const COOKIES_DECLINED = null;
 
@@ -128,10 +126,6 @@ function App() {
   ]);
   return (
     <div className="App">
-      <Numpad
-        useTriggerInputFieldState={[triggerNumpadEvent, setTriggerNumpadEvent]}
-        useNumberState={[number, setNumber]}
-      />
       <RightClickMenu>
         <RightClickMenuEntry
           key="share-on-facebook"
