@@ -1,0 +1,22 @@
+.numpad {
+  padding: 3vmin 6.5vmin 3vmin 0;
+  position: fixed;
+  background-color: rgba(240, 248, 255, 0.082);
+  border: 0.3vmin solid rgba(180, 185, 196);
+  border-radius: 5vmin;
+  top: 28vmin;
+  left: 77.5vmin;
+  border-top-left-radius: 2vmin;
+}
+
+.numpad .number {
+  margin: 1vmin 0;
+  font-size: 3.5vmin;
+  position: relative;
+  width: 4vmin;
+  text-align: center;
+  background-color: rgba(240, 248, 255, 0.3);
+  color: rgba(53, 81, 173);
+  border: 0.3vmin solid rgba(180, 185, 196);
+  border-radius: 50%;
+}
