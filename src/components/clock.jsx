@@ -232,6 +232,7 @@ function Clock({
         if (typeof number === "number") {
           setHoursLeft(number);
           setNumber(undefined);
+          playSound(sound.tick, buttonsMuted, volume);
           setCurrentNumberInputField(currentNumberInputField + 1);
         }
         break;
@@ -239,6 +240,7 @@ function Clock({
         if (typeof number === "number") {
           setHoursRight(number);
           setNumber(undefined);
+          playSound(sound.tick, buttonsMuted, volume);
           setCurrentNumberInputField(currentNumberInputField + 1);
         }
         break;
@@ -246,6 +248,7 @@ function Clock({
         if (typeof number === "number") {
           setMinutesLeft(number);
           setNumber(undefined);
+          playSound(sound.tick, buttonsMuted, volume);
           setCurrentNumberInputField(currentNumberInputField + 1);
         }
         break;
@@ -253,6 +256,7 @@ function Clock({
         if (typeof number === "number") {
           setMinutesRight(number);
           setNumber(undefined);
+          playSound(sound.tick, buttonsMuted, volume);
           setCurrentNumberInputField(undefined);
           playSound(sound.snooze, buttonsMuted, volume);
         }
@@ -263,7 +267,9 @@ function Clock({
     setNumber,
     currentNumberInputField,
     setCurrentNumberInputField,
-    setTriggerNumpadEvent
+    setTriggerNumpadEvent,
+    buttonsMuted,
+    volume
   ]);
   useMinutesCalibrator(
     hoursLeft,
