@@ -13,6 +13,7 @@ import ArmAlarm from "./components/armAlarm";
 import WakeyWakeyLogo from "./components/wakeyWakeyLogo";
 import nightVideo from "./videos/universe.webm";
 import { vmin } from "./components/vscale.js";
+import Numpad from "./components/numpad";
 
 const COOKIES_DECLINED = null;
 
@@ -23,6 +24,8 @@ function determineInitialValue(storedName, returnIfNull) {
     : returnIfNull;
 }
 function App() {
+  const [number, setNumber] = useState(undefined);
+  const [triggerNumpadEvent, setTriggerNumpadEvent] = useState(false);
   const [cookiesAccepted, setCookiesAccepted] = useState(
     determineInitialValue("cookiesAccepted", false)
   );
@@ -125,8 +128,13 @@ function App() {
   ]);
   return (
     <div className="App">
+      <Numpad
+        useTriggerInputFieldState={[triggerNumpadEvent, setTriggerNumpadEvent]}
+        useNumberState={[number, setNumber]}
+      />
       <RightClickMenu>
         <RightClickMenuEntry
+          key="share-on-facebook"
           action={() =>
             window.open(
               "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.wakeywakey.me%2F&amp;src=sdkpreparse",
@@ -163,6 +171,11 @@ function App() {
       />
       <Clock
         {...{
+          useNumpadState: [number, setNumber],
+          useTriggerInputFieldState: [
+            triggerNumpadEvent,
+            setTriggerNumpadEvent
+          ],
           state: clockState,
           wakeupTimeExternal,
           setWakeupTimeExternal,
@@ -187,6 +200,7 @@ function App() {
       />
       <SoundList
         {...{
+          useNumpadState: [number, setNumber],
           clockState,
           setList,
           selectedSoundEntryIndexArray,
