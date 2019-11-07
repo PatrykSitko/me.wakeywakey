@@ -1,11 +1,11 @@
 .numpad {
   padding: 3vmin 6.5vmin 3vmin 0;
-  position: fixed;
+  position: absolute;
   background-color: rgba(240, 248, 255, 0.082);
   border: 0.3vmin solid rgba(180, 185, 196);
   border-radius: 5vmin;
-  top: 28vmin;
-  left: 77.5vmin;
+  margin-top: -0.3vmin;
+  margin-left: 54.5vmin;
   border-top-left-radius: 2vmin;
 }
 
