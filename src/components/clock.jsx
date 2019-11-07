@@ -4,9 +4,8 @@ import VolumeController from "./volumeController";
 import speakerImage from "../images/speaker.svg";
 import speakerMutedImage from "../images/speaker-muted.svg";
 import FacebookShareButton from "./facebookShareButton";
+import Numpad from "./numpad";
 import "./clock.css";
-
-const FUNCTION = 1;
 
 function useMinutesCalibrator(
   hoursLeft,
@@ -210,7 +209,7 @@ function Clock({
   ...props
 }) {
   const [number, setNumber] = useNumpadState;
-  const setTriggerNumpadEvent = useTriggerInputFieldState[FUNCTION];
+  const [triggerNumpadEvent, setTriggerNumpadEvent] = useTriggerInputFieldState;
   const [hoursLeft, setHoursLeft] = useState(parseInt(hours.slice(0, 1)));
   const [hoursLeftAction, setHoursLeftAction] = useState("none");
   const [hoursRight, setHoursRight] = useState(parseInt(hours.slice(1, 2)));
@@ -336,6 +335,10 @@ function Clock({
           : ""
       }${className ? " ".concat(className) : ""}`}
     >
+      <Numpad
+        useTriggerInputFieldState={[triggerNumpadEvent, setTriggerNumpadEvent]}
+        useNumberState={[number, setNumber]}
+      />
       <div className="clock-time clock-hours-left">
         {!hideUI &&
         typeof currentNumberInputField === "number" &&
