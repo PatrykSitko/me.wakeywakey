@@ -6,6 +6,8 @@ import speakerMutedImage from "../images/speaker-muted.svg";
 import FacebookShareButton from "./facebookShareButton";
 import "./clock.css";
 
+const FUNCTION = 1;
+
 function useMinutesCalibrator(
   hoursLeft,
   hoursRight,
@@ -203,8 +205,12 @@ function Clock({
   setWakeupTimeExternal,
   marginTop,
   setMarginTop,
+  useNumpadState,
+  useTriggerInputFieldState,
   ...props
 }) {
+  const [number, setNumber] = useNumpadState;
+  const setTriggerNumpadEvent = useTriggerInputFieldState[FUNCTION];
   const [hoursLeft, setHoursLeft] = useState(parseInt(hours.slice(0, 1)));
   const [hoursLeftAction, setHoursLeftAction] = useState("none");
   const [hoursRight, setHoursRight] = useState(parseInt(hours.slice(1, 2)));
@@ -217,6 +223,48 @@ function Clock({
   const [currentNumberInputField, setCurrentNumberInputField] = useState(
     undefined
   );
+  useEffect(() => {
+    switch (currentNumberInputField) {
+      default:
+        setTriggerNumpadEvent(false);
+        break;
+      case 0:
+        if (typeof number === "number") {
+          setHoursLeft(number);
+          setNumber(undefined);
+          setCurrentNumberInputField(currentNumberInputField + 1);
+        }
+        break;
+      case 1:
+        if (typeof number === "number") {
+          setHoursRight(number);
+          setNumber(undefined);
+          setCurrentNumberInputField(currentNumberInputField + 1);
+        }
+        break;
+      case 2:
+        if (typeof number === "number") {
+          setMinutesLeft(number);
+          setNumber(undefined);
+          setCurrentNumberInputField(currentNumberInputField + 1);
+        }
+        break;
+      case 3:
+        if (typeof number === "number") {
+          setMinutesRight(number);
+          setNumber(undefined);
+          setCurrentNumberInputField(undefined);
+          playSound(sound.snooze, buttonsMuted, volume);
+        }
+        break;
+    }
+  }, [
+    number,
+    setNumber,
+    currentNumberInputField,
+    setCurrentNumberInputField,
+    setTriggerNumpadEvent
+  ]);
   useMinutesCalibrator(
     hoursLeft,
     hoursRight,
@@ -290,7 +338,7 @@ function Clock({
             {...{
               onClick: () =>
                 playSound(sound.snooze, buttonsMuted, volume) &&
-                setCurrentNumberInputField(),
+                (setCurrentNumberInputField() || setTriggerNumpadEvent(false)),
               setNumber: number => setHoursLeft(number > 2 ? 2 : number),
               goToNextField,
               number: hoursLeft,
@@ -308,7 +356,7 @@ function Clock({
             onClick={() =>
               !hideUI &&
               playSound(sound.snooze, buttonsMuted, volume) &&
-              setCurrentNumberInputField(0)
+              (setCurrentNumberInputField(0) || setTriggerNumpadEvent(true))
             }
           >
             {hoursLeft}
@@ -323,7 +371,7 @@ function Clock({
             {...{
               onClick: () =>
                 playSound(sound.snooze, buttonsMuted, volume) &&
-                setCurrentNumberInputField(),
+                (setCurrentNumberInputField() || setTriggerNumpadEvent(false)),
               setNumber: number =>
                 setHoursRight(hoursLeft >= 2 && number > 3 ? 3 : number),
               goToNextField,
@@ -342,7 +390,7 @@ function Clock({
             onClick={() =>
               !hideUI &&
               playSound(sound.snooze, buttonsMuted, volume) &&
-              setCurrentNumberInputField(1)
+              (setCurrentNumberInputField(1) || setTriggerNumpadEvent(true))
             }
           >
             {hoursRight}
@@ -358,7 +406,7 @@ function Clock({
             {...{
               onClick: () =>
                 playSound(sound.snooze, buttonsMuted, volume) &&
-                setCurrentNumberInputField(),
+                (setCurrentNumberInputField() || setTriggerNumpadEvent(false)),
               setNumber: number => setMinutesLeft(number > 5 ? 5 : number),
               goToNextField,
               number: minutesLeft,
@@ -376,7 +424,7 @@ function Clock({
             onClick={() =>
               !hideUI &&
               playSound(sound.snooze, buttonsMuted, volume) &&
-              setCurrentNumberInputField(2)
+              (setCurrentNumberInputField(2) || setTriggerNumpadEvent(true))
             }
           >
             {minutesLeft}
@@ -391,7 +439,7 @@ function Clock({
             {...{
               onClick: () =>
                 playSound(sound.snooze, buttonsMuted, volume) &&
-                setCurrentNumberInputField(),
+                (setCurrentNumberInputField() || setTriggerNumpadEvent(false)),
               setNumber: setMinutesRight,
               goToNextField: () =>
                 playSound(sound.snooze, buttonsMuted, volume) &&
@@ -411,7 +459,7 @@ function Clock({
             onClick={() =>
               !hideUI &&
               playSound(sound.snooze, buttonsMuted, volume) &&
-              setCurrentNumberInputField(3)
+              (setCurrentNumberInputField(3) || setTriggerNumpadEvent(true))
             }
           >
             {minutesRight}
