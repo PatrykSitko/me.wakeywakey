@@ -1,31 +1,3 @@
-// import React, { useRef, useEffect } from "react";
-
-// const FUNCTION = 1;
-
-// function Numpad({ useTriggerInputFieldState, useNumberState, ...others }) {
-//   const ref = useRef();
-//   const setNumber = useNumberState[FUNCTION];
-//   const [triggerEvent, setTriggerEvent] = useTriggerInputFieldState;
-//   useEffect(() => {
-//     if (ref && ref.current && triggerEvent) {
-//       Object.values(ref.current)[0].click();
-//       ref.current.focus();
-//       ref.current.click();
-//       setTriggerEvent(false);
-//     }
-//   }, [ref, triggerEvent, setTriggerEvent]);
-//   return (
-//     <form
-//       onSubmit={e => e.preventDefault()}
-//       onChange={e => setNumber(parseInt(`${e.target.value}`.split("").pop()))}
-//       {...{ ref, ...others }}
-//     >
-//       <input id="numpad" ref={ref} type="number" />
-//     </form>
-//   );
-// }
-
-// export default Numpad;
 import React, { useEffect } from "react";
 import "./numpad.css";
 
